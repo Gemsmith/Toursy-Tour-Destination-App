@@ -1,0 +1,20 @@
+@import './sass/variables.scss';
+
+// Added axact 50px margin from top because our navbar is 50px and is fixed  on top and therefore all our content needs to start 50px from the top to not get cutoff.
+.app__wrapper {
+  margin-top: $navbar-height;
+}
+
+section {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: calc(100vh - $navbar-height);
+}
+
+button {
+  cursor: pointer;
+}

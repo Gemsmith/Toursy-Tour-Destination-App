@@ -1,0 +1,12 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+@mixin no-scrollbar-chrome {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+@mixin no-scrollbar-others {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
