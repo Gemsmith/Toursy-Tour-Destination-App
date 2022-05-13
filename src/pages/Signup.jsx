@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import validate from '../components/utils/inputValidation.util';
+import validate from '../utils/inputValidation.util';
 import '../sass/pages/Signup.scss';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import fbLogo from '../assets/svg/fb-logo.svg';
 import googleLogo from '../assets/svg/google-logo.svg';
-import twitterLogo from '../assets/svg/twitter-logo.svg';
-import {
-  googleLoginSignup,
-  facebookLoginSignup,
-  twitterLoginSignup,
-} from '../redux/api';
+import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
 import { useDispatch } from 'react-redux';
 import { localSignupThunk } from '../redux/features/authSlice';
 
@@ -52,9 +47,7 @@ const Signup = () => {
       return;
     }
 
-    dispatch(
-      localSignupThunk({ email, password, cPassword, firstName, lastName })
-    );
+    dispatch(localSignupThunk({ email, password, cPassword, firstName, lastName }));
   };
 
   return (
@@ -173,13 +166,6 @@ const Signup = () => {
                 <div className="">
                   <img src={fbLogo} className="" alt="google logo" />
                   <span className="">Sign up with Facebook</span>
-                </div>
-              </button>
-
-              <button onClick={() => twitterLoginSignup()} className="">
-                <div className="">
-                  <img src={twitterLogo} className="" alt="google logo" />
-                  <span className="">Sign up with Twitter</span>
                 </div>
               </button>
             </div>

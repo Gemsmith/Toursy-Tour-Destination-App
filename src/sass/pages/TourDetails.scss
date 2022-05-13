@@ -1,0 +1,169 @@
+@import '../variables.scss';
+@mixin transition {
+  transition: all 0.2s ease-in-out;
+}
+
+$card-border-radius: 0.5rem;
+
+section.tourDetailsSection {
+  .tourDetails {
+    position: relative;
+    border-radius: $card-border-radius;
+    overflow: hidden;
+    box-shadow: 0 1rem 5rem #cdd9ff;
+
+    .tourDetails-image__container {
+      position: relative;
+
+      .image__container-heroImg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        @include transition;
+      }
+
+      .createdAt {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: absolute;
+        opacity: 0.75;
+        top: 1.7rem;
+        left: 1.5rem;
+        font-size: 0.9rem;
+        color: $white-color;
+        font-weight: 500;
+        pointer-events: none;
+        @include transition;
+
+        img {
+          width: 1.1rem;
+          height: 1.1rem;
+        }
+
+        @media screen and (max-width: 768px) {
+          opacity: 1;
+        }
+      }
+
+      .tourDetails-creatorName {
+        @include transition;
+        text-decoration: none;
+        color: $black-color;
+        font-size: 0.91rem;
+        font-weight: 500;
+        padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+        display: flex;
+        align-items: flex-end;
+        gap: 0.75rem;
+        position: absolute;
+        left: 1rem;
+        bottom: 1rem;
+        background-color: $white-color;
+        border-radius: 0.5rem;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+          font-size: 1.1rem;
+
+          img {
+            width: 4rem;
+            height: 4rem;
+          }
+
+          div {
+            p {
+              margin-top: 0.1rem;
+            }
+          }
+        }
+
+        img {
+          @include transition;
+          width: 3.3rem;
+          height: 3.3rem;
+          border-radius: 10px;
+        }
+
+        div {
+          p {
+            margin-top: 0.1rem;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          font-size: 0.75rem;
+          border-radius: 0.3rem;
+          opacity: 1;
+          color: $darkBlue-color;
+          font-weight: 600;
+
+          img {
+            @include transition;
+            width: 2.4rem;
+            height: 2.4rem;
+            border-radius: 0.3rem;
+          }
+
+          div {
+            p {
+              margin-top: 0rem;
+            }
+          }
+        }
+      }
+    }
+
+    .tourDetails-textBody {
+      padding: 1.5rem 1rem 2rem 1rem;
+
+      .textBody-title-and-tags {
+        margin-bottom: 1.2rem;
+
+        .title {
+          // position: absolute;
+          // bottom: 0;
+          // left: 0;
+          font-weight: 500;
+          font-size: 1.1rem;
+          margin-bottom: 0.1rem;
+        }
+
+        .tags {
+          font-size: 0.84rem;
+          color: $skyBlue-color;
+        }
+      }
+
+      .textBody-description {
+        font-size: 0.87rem;
+        color: $gray-color;
+        margin-bottom: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 0.87rem;
+      }
+
+      .likeCount {
+      }
+    }
+  }
+}
+.card__container {
+  // position: relative;
+  // // width: 24rem;
+  // border-radius: $card-border-radius;
+  // overflow: hidden;
+  // box-shadow: 0 1rem 5rem #cdd9ff;
+
+  &:hover {
+  }
+}
+
+.svg-fill {
+  fill: red;
+}

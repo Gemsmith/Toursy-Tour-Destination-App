@@ -1,0 +1,36 @@
+section.dashboard {
+  // background-image: url('/assets/images/greece.jpg');
+
+  .dashboard-tours__container {
+    p {
+    }
+
+    .dashboard-tours__container-grid {
+      display: grid;
+      // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
+      justify-content: center;
+      margin: 0 auto;
+      gap: 1rem;
+
+      .card__wrapper {
+        position: relative;
+
+        .card__wrapper-buttons__container {
+          position: absolute;
+          top: 1.5rem;
+          right: 1rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 0.5rem;
+
+          .svg-icons {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

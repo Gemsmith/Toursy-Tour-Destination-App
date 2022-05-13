@@ -10,15 +10,14 @@
 
   background: rgba(255, 255, 255, 0.25);
   // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  // border: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(140, 219, 255, 0.671);
 
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur($blur-value);
+  -webkit-backdrop-filter: blur($blur-value);
 
   // {/* Navbar - Desktop */}
   .navbar__desktop {
     display: flex;
-    padding: 1rem;
     margin: 0 1.75rem;
     display: flex;
     justify-content: space-between;
@@ -57,6 +56,7 @@
         display: flex;
         align-items: center;
         gap: 0.6rem;
+        background-color: transparent;
 
         @media screen and (max-width: 768px) {
           display: none;
@@ -72,8 +72,8 @@
       }
 
       svg {
-        transition-property: background-color, border-color, color, fill, stroke,
-          opacity, box-shadow, transform;
+        transition-property: background-color, border-color, color, fill, stroke, opacity,
+          box-shadow, transform;
         transition-duration: 300ms;
         width: 1.5rem;
         height: 1.5rem;
@@ -111,11 +111,12 @@
 // Common Styles
 // {/* User Avatar */}
 .navbar__userAvatar {
-  button {
+  div {
     position: relative;
     display: flex;
     align-items: center;
     border-radius: 9999px;
+    cursor: pointer;
 
     &.avatarPic {
       border: none;
@@ -140,15 +141,19 @@
 
   &.avatarMenuDesktop {
     box-shadow: 0 2px 18px 0 rgba(31, 38, 135, 0.37);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $white-color;
     padding: 1rem;
-    width: max-content;
-    max-width: 12rem;
+    width: fit-content;
+    max-width: 30rem;
 
     position: absolute;
     top: 60px;
     right: 0;
-    gap: 0.75rem;
+    gap: 0.3rem;
+
+    .navBtn {
+      margin-top: 0.75rem;
+    }
   }
 
   &.avatarMenuMobile {
@@ -170,6 +175,7 @@
       font-size: 0.8rem;
       word-wrap: break-word;
       word-break: break-all;
+
       img {
         width: 3rem;
         height: 3rem;
@@ -181,8 +187,12 @@
   li {
     @include no-scrollbar-chrome;
     list-style: none;
-
     overflow: auto;
+
+    a {
+      color: $darkBlue-color;
+      text-decoration: none;
+    }
   }
 
   button {
@@ -251,5 +261,5 @@ a.navLinks {
 }
 
 .svg-fill-salmon {
-  fill: #f87171;
+  fill: $salmon-color;
 }

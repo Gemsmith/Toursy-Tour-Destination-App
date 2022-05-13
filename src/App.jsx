@@ -1,18 +1,21 @@
 import Navbar from './components/Navbar';
 import './App.scss';
 import Home from './pages/Home';
-import Post from './pages/Post';
 import Login from './pages/Login';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Signup from './pages/Signup';
-import Axios from 'axios';
 import LoginFailed from './pages/LoginFailed';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getUserFromServer } from './redux/api';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserFromServerThunk } from './redux/features/authSlice';
+import { useDispatch } from 'react-redux';
+import AddEditTour from './pages/AddEditTour';
+import Dashboard from './pages/Dashboard';
+import TourDetails from './pages/TourDetails';
+import UserDetails from './pages/UserDetails';
+import { getLoggedInUserThunk } from './redux/features/userSlice';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,10 +28,10 @@ const App = () => {
     if (!isUserAtLocalStorage) {
       // dispatch the action to get user from server. We needed to implement this fetching because for social logins passportJs can only do a redirect on successful authentication. Which means we can't send a res.json to the server with {user}, can only do a res.redirect('/something'). So after a social login, on the client we have to look if we have a user in local storage and fetch him otherwise.
       // This dispatch action will also set the user in the store & localStorage
-      dispatch(getUserFromServerThunk());
+      dispatch(getLoggedInUserThunk());
       // And then also set the user in the component's state
       return;
-    }
+    } // eslint-disable-next-line
   }, []);
 
   return (
@@ -37,22 +40,52 @@ const App = () => {
       <div className="app__wrapper">
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route path="/signup" element={<Signup />} />
-
           <Route
             path="/login"
             // element={user ? <Navigate to="/" /> : <Login />}
             element={<Login />}
           />
-
+          {/* Need this page bcoz of how server's PassportJS redirect is setup */}
           <Route path="/loginfailed" element={<LoginFailed />} />
 
+          {/* =============PROTECTED ROUTES START==================== */}
+          {/* Add a new tour - NEEDS AUTH */}
           <Route
-            path="/post/:id"
-            // element={user ? <Post /> : <Navigate to="/login" />}
-            element={<Post />}
+            path="/addTour"
+            element={
+              <ProtectedRoutes>
+                <AddEditTour />
+              </ProtectedRoutes>
+            }
           />
+          {/* Edit your uploaded tour's details - NEEDS AUTH */}
+          <Route
+            path="/editTour/:id"
+            element={
+              <ProtectedRoutes>
+                <AddEditTour />
+              </ProtectedRoutes>
+            }
+          />
+          {/* View your uploaded tours - NEEDS AUTH */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            }
+          />
+          {/* =============PROTECTED ROUTES END==================== */}
+
+          {/* View a tour's details */}
+          <Route path="/tour/:id" element={<TourDetails />} />
+          {/* Fetch any user's details (For creator profilePic, etc.) */}
+          <Route path="/user/:id" element={<UserDetails />} />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <ToastContainer position="top-right" />

@@ -1,0 +1,102 @@
+@import '../variables.scss';
+
+section.notfound {
+  background-image: url('/assets/images/greece.jpg');
+  // background-size: cover;
+  // background-position: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 4rem;
+
+  .notfound-text {
+    text-align: center;
+
+    .notfound-text-title {
+      font-size: 8rem;
+      font-weight: 700;
+
+      background: linear-gradient(to right, #fff 20%, #ff0 40%, #ff0 60%, #fff 80%);
+      background-size: 200% auto;
+
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: shine 1s linear infinite;
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+    }
+  }
+
+  .notfound-links {
+    background: #000;
+    padding: 1.2rem 2rem 1.7rem 2rem;
+    border-radius: 6px;
+
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 30px rgba(60, 60, 60, 0.1);
+    backdrop-filter: blur($blur-value);
+    -webkit-backdrop-filter: blur($blur-value);
+
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5rem;
+
+    .homeBtn,
+    .loginBtn {
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 5px;
+      padding: 0.5rem 0.75rem;
+      height: 100%;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      text-align: center;
+      background-color: $cutePink-color;
+      box-shadow: 0 6px darken($cutePink-color, 10%);
+      border: none;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+      // align-items: center;
+      color: white;
+      transition: all 0.1s ease;
+
+      &:hover {
+        background-color: $cutePink-color;
+      }
+
+      &:active {
+        box-shadow: 0 4px darken($cutePink-color, 5%);
+        transform: translateY(1.5px);
+      }
+    }
+
+    .loginBtn {
+      background-color: $primary-color;
+      box-shadow: 0 6px darken($primary-color, 10%);
+      flex-grow: 1;
+      color: black;
+
+      &:hover {
+        background-color: $primary-color;
+      }
+
+      &:active {
+        box-shadow: 0 4px darken($primary-color, 10%);
+        transform: translateY(1.5px);
+      }
+
+      button {
+        color: $darkBlue-color;
+        font-weight: bold;
+      }
+    }
+  }
+}

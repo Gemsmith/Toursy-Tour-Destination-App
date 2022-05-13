@@ -7,12 +7,23 @@
 
 section {
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
   position: relative;
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   min-height: calc(100vh - $navbar-height);
+
+  @media screen and (min-width: 480px) {
+    padding: 0.75rem 1rem;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 1.2rem 2rem;
+  }
+  @media screen and (min-width: 1024px) {
+    padding: 1.8rem 3rem;
+  }
 }
 
 button {

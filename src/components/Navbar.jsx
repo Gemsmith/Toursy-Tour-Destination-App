@@ -1,22 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setUserValue } from '../redux/features/authSlice';
+import { setLoggedInUserValue } from '../redux/features/userSlice';
+import { setAllToursValue, setTourValue } from '../redux/features/tourSlice';
 import '../sass/components/Navbar.scss';
+import RedirectToLogin from './RedirectToLogin';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 
-  const { user } = useSelector((state) => state.auth);
+  const { loggedInUser } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
 
   const logout = () => {
+    // This line is to remove req.user from BE as well
     window.open('http://localhost:5000/auth/logout', '_self');
-    dispatch(setUserValue(null));
+    // Remove the user, persistedStates from redux store
+    // I can't figure out how to use redux-persist's PURGE to empty the store.
+    // So we'll set all state variables to null for now.
+    // Remove them from localStorage as well
     localStorage.removeItem('user');
-    // remove the user from redux store
-    // remove the user from localStorage
+    localStorage.setItem('persist:tours_app', null);
+    // And remove the persist data from localStorage to prevent REHYDRATING the store back after logout.
+    dispatch(setLoggedInUserValue(null)); // Auth Slice PURGING
+    dispatch(setTourValue(null)); // Tour Slice PURGING
+    dispatch(setAllToursValue(null)); // Tour Slice PURGING
   };
 
   // Menu Toggle Functionality:
@@ -79,7 +89,9 @@ const Navbar = () => {
             {/* <Link className="navLinks clr-black" to="/about">
               About
             </Link> */}
-            {user === null || user === undefined || user === '' ? (
+            {loggedInUser === null ||
+            loggedInUser === undefined ||
+            loggedInUser === '' ? (
               <>
                 <Link className="navLinks clr-blue" to="/login">
                   Login
@@ -90,7 +102,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                {/* Desktop View - User Avatar */}
                 <Link className="navLinks clr-black" to="/addTour">
                   Add Tour
                 </Link>
@@ -98,15 +109,16 @@ const Navbar = () => {
                   Dashboard
                 </Link>
 
+                {/* Desktop View - User Avatar */}
                 <span className="navbar__userAvatar">
-                  <button
+                  <div
                     ref={avatarBtnElRef}
                     className="avatarPic"
                     onClick={() => setAvatarMenuOpen(!avatarMenuOpen)}
                   >
                     <img
                       className=""
-                      src={user?.profileImageUrl}
+                      src={loggedInUser?.profileImageUrl}
                       referrerPolicy="no-referrer"
                       alt=""
                     />
@@ -114,10 +126,16 @@ const Navbar = () => {
                     {avatarMenuOpen && (
                       <ul className="avatarMenu avatarMenuDesktop">
                         <li>
-                          <b>{user?.name}</b>
+                          <Link to={`/user/${loggedInUser._id}`}>
+                            <b>{loggedInUser?.name}</b>
+                          </Link>
                         </li>
 
-                        <li>{user?.email}</li>
+                        <li>
+                          <Link to={`/user/${loggedInUser._id}`}>
+                            {loggedInUser?.email}
+                          </Link>
+                        </li>
 
                         <li>
                           <button onClick={() => logout()} className="navBtn ">
@@ -126,7 +144,7 @@ const Navbar = () => {
                         </li>
                       </ul>
                     )}
-                  </button>
+                  </div>
                 </span>
               </>
             )}
@@ -139,9 +157,7 @@ const Navbar = () => {
           type="button"
           aria-label="Toggle mobile menu"
           onClick={() => setMenuOpen(!menuOpen)}
-          className={`navbar__hamburger-btn ${
-            !menuOpen ? 'clr-black' : 'clr-blue'
-          } `}
+          className={`navbar__hamburger-btn ${!menuOpen ? 'clr-black' : 'clr-blue'} `}
         >
           <svg
             className={`${menuOpen ? 'svg-fill-salmon' : ''}`}
@@ -164,16 +180,13 @@ const Navbar = () => {
           {/* Mobile View - Nav Links */}
           {/* <div className="navbar__mobile-navLinks">{navLinks}</div> */}
           <div className="navbar__mobile-navLinks">
-            <>
-              <Link className="navLinks clr-black" to="/">
-                Home
-              </Link>
-              <Link className="navLinks clr-black" to="/about">
-                About
-              </Link>
-            </>
+            <Link className="navLinks clr-black" to="/">
+              Home
+            </Link>
 
-            {user === null || user === undefined || user === '' ? (
+            {loggedInUser === null ||
+            loggedInUser === undefined ||
+            loggedInUser === '' ? (
               <>
                 <Link className="navLinks clr-blue" to="/login">
                   Login
@@ -184,21 +197,28 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <Link className="navLinks clr-black" to="/addTour">
+                  Add Tour
+                </Link>
+                <Link className="navLinks clr-black" to="/dashboard">
+                  Dashboard
+                </Link>
+
                 {/* Mobile View - User Avatar */}
                 <ul className="avatarMenu avatarMenuMobile">
                   <div className="avatarMenuMobile__top">
                     <div className="avatarMenuMobile__top-text">
                       <li>
-                        <b>{user?.name}</b>
+                        <b>{loggedInUser?.name}</b>
                       </li>
 
-                      <li>{user?.email}</li>
+                      <li>{loggedInUser?.email}</li>
                     </div>
 
                     <li>
                       <img
                         className=""
-                        src={user?.profileImageUrl}
+                        src={loggedInUser?.profileImageUrl}
                         referrerPolicy="no-referrer"
                         alt=""
                       />

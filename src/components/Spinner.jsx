@@ -3,10 +3,10 @@ import '../sass/components/Spinner.scss';
 
 const Spinner = () => {
   return (
-    <section>
-      <div class="loader loader-1">
-        <div class="loader-outter"></div>
-        <div class="loader-inner"></div>
+    <section className="spinner">
+      <div className="loader loader-1">
+        <div className="loader-outter"></div>
+        <div className="loader-inner"></div>
       </div>
     </section>
   );

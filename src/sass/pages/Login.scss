@@ -22,8 +22,8 @@ section.login {
 
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(7.5px);
-    -webkit-backdrop-filter: blur(7.5px);
+    backdrop-filter: blur($blur-value);
+    -webkit-backdrop-filter: blur($blur-value);
 
     @media screen and (max-width: 1024px) {
       padding: 2rem 1rem;
@@ -194,8 +194,8 @@ section.login {
             }
 
             span {
-              transition-property: background-color, border-color, color, fill,
-                stroke, opacity, box-shadow, transform;
+              transition-property: background-color, border-color, color, fill, stroke,
+                opacity, box-shadow, transform;
               transition-duration: 300ms;
               color: #374151;
               font-family: $font-inter;

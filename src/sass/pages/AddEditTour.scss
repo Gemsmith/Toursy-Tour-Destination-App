@@ -1,0 +1,204 @@
+@import '../variables.scss';
+
+.svg-icons {
+  height: 15px;
+  width: 15px;
+  background: none;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+section.add__edit__tour {
+  // display: flex;
+  // align-items: center;
+  // flex-direction: column;
+
+  form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    div {
+      label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      input,
+      textarea {
+        background-color: rgb(231, 254, 255);
+        position: relative;
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 5px;
+
+        &:focus {
+          outline: 2px solid rgb(154, 226, 255);
+        }
+      }
+    }
+  }
+
+  .add__edit__tour-heading {
+    margin-bottom: 2rem;
+  }
+
+  .add__edit__tour-title {
+    position: relative;
+    width: 100%;
+  }
+
+  .add__edit__tour-description {
+    position: relative;
+    width: 100%;
+  }
+
+  .add__edit__tour-tags {
+    width: 100%;
+
+    .tags__container-labelRow {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tags__container-inputs {
+      display: grid;
+      // align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 2rem 1rem;
+
+      .tags__container-inputs-input {
+        position: relative;
+        display: flex;
+        gap: 0.1rem;
+
+        .input-tag__item {
+          padding-right: 2.4rem;
+        }
+
+        .input-removeBtn {
+          position: absolute;
+          top: 50%;
+          right: 3%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  .add__edit__tour-imageUpload {
+    width: 100%;
+    display: flex;
+
+    input {
+      background-color: transparent;
+      height: 4rem;
+      padding: 0.75rem 0;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .add__edit__tour-form-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5rem;
+
+    .saveBtn,
+    .clearBtn {
+      border-radius: 5px;
+      padding: 0.5rem 0.75rem;
+      height: 100%;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      text-align: center;
+      background-color: $cutePink-color;
+      box-shadow: 0 6px darken($cutePink-color, 10%);
+      border: none;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+      // align-items: center;
+      color: white;
+      transition: all 0.1s ease;
+
+      &:hover {
+        background-color: $cutePink-color;
+      }
+
+      &:active {
+        box-shadow: 0 4px darken($cutePink-color, 5%);
+        transform: translateY(1.5px);
+      }
+    }
+
+    .clearBtn {
+      background-color: $primary-color;
+      box-shadow: 0 6px darken($primary-color, 10%);
+      flex-grow: 1;
+      color: black;
+
+      &:hover {
+        background-color: $primary-color;
+      }
+
+      &:active {
+        box-shadow: 0 4px darken($primary-color, 10%);
+        transform: translateY(1.5px);
+      }
+
+      button {
+        color: $darkBlue-color;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.error-bg {
+  background-color: $salmon-color;
+}
+
+.input-warning {
+  color: $cutePink-color;
+  position: absolute;
+  bottom: -1.2rem;
+  left: 0;
+}
+
+// Picks the file input's text's styles
+input[type='file'] {
+  background-color: transparent;
+  // font-weight: bold;
+}
+
+// Picks the file input's box's styles
+input[type='file' i]::-webkit-file-upload-button {
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  height: 100%;
+  width: 30%;
+  font-weight: bold;
+  background-color: #f79159;
+  box-shadow: 0 6px darken(#f79159, 10%);
+  border: none;
+  color: white;
+  transition: all 0.1s ease;
+
+  &:hover {
+    background-color: #fd9862;
+  }
+
+  &:active {
+    box-shadow: 0 4px darken(#f79159, 10%);
+    transform: translateY(1.5px);
+  }
+}

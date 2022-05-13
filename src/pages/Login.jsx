@@ -1,19 +1,14 @@
 import { useState } from 'react';
-import validate from '../components/utils/inputValidation.util';
+import validate from '../utils/inputValidation.util';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import '../sass/pages/Login.scss';
 import fbLogo from '../assets/svg/fb-logo.svg';
 import googleLogo from '../assets/svg/google-logo.svg';
-import twitterLogo from '../assets/svg/twitter-logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { localLoginThunk } from '../redux/features/authSlice';
 import SpinnerLoader from '../components/SpinnerLoader';
-import {
-  googleLoginSignup,
-  facebookLoginSignup,
-  twitterLoginSignup,
-} from '../redux/api';
+import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,10 +27,7 @@ const Login = () => {
     const validateEmail = validate.email(loginEmail);
     const validatePassword = validate.password(loginPassword);
 
-    if (
-      validateEmail?.status === 'error' ||
-      validatePassword?.status === 'error'
-    ) {
+    if (validateEmail?.status === 'error' || validatePassword?.status === 'error') {
       console.log(`Validation Error`);
       toast.error(`${validateEmail.errorMessage}`);
       toast.error(`${validatePassword.errorMessage}`);
@@ -117,44 +109,12 @@ const Login = () => {
                   <span className="">Log in with Facebook</span>
                 </div>
               </button>
-
-              <button onClick={() => twitterLoginSignup()} className="">
-                <div className="">
-                  <img src={twitterLogo} className="" alt="google logo" />
-                  <span className="">Log in with Twitter</span>
-                </div>
-              </button>
             </div>
 
             <div className="login__forms-right-signup__btn">
               <span>Don't have an account? </span>
               <Link to="/signup">Sign Up</Link>
             </div>
-
-            {/* <div className="mt-32 space-y-4 text-gray-600 text-center sm:-mb-8">
-                  <p className="text-xs">
-                    By proceeding, you agree to our{' '}
-                    <a href="#" className="underline">
-                      Terms of Use
-                    </a>{' '}
-                    and confirm you have read our{' '}
-                    <a href="#" className="underline">
-                      Privacy and Cookie Statement
-                    </a>
-                    .
-                  </p>
-                  <p className="text-xs">
-                    This site is protected by reCAPTCHA and the{' '}
-                    <a href="#" className="underline">
-                      Google Privacy Policy
-                    </a>{' '}
-                    and{' '}
-                    <a href="#" className="underline">
-                      Terms of Service
-                    </a>{' '}
-                    apply.
-                  </p>
-                </div> */}
           </div>
         </div>
       </div>
