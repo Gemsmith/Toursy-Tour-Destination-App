@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import SpinnerLoader from '../components/SpinnerLoader';
 import { getUserByIdThunk } from '../redux/features/userSlice';
 import '../sass/pages/UserDetails.scss';
 import { formattedDate } from '../utils/dateFormatter';
@@ -13,13 +14,19 @@ const UserDetails = () => {
   useEffect(() => {
     console.log('inside userDetails');
     dispatch(getUserByIdThunk(userId));
+    return;
   }, [userId]);
+
+  console.log('userID: ', userId);
+  console.log('currentUser._id: ', currentUser._id);
+
+  if (userId !== currentUser._id) {
+    return <SpinnerLoader />;
+  }
 
   return (
     <section className="userdetails">
-      {/* {user && ( */}
       <h1 className="userdetails-heading">Personal Info</h1>
-
       <div className="userdetails__container">
         {/* Profile Pic + Name + Date */}
         <div className="userdetails__container-image-name-date">
@@ -55,19 +62,19 @@ const UserDetails = () => {
         {/* Email */}
         <div className="userdetails__container-email">
           {/* <svg
-            className="email-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-              clipRule="evenodd"
-            />
-          </svg> */}
+     className="email-icon"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 20 20"
+     fill="currentColor"
+   >
+     <path
+       fillRule="evenodd"
+       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+       clipRule="evenodd"
+     />
+   </svg> */}
           <label className="email-label">Email address</label>
-          <a className="email-link" href="mailto:webmaster@windster.com">
+          <a className="email-link" href={`mailto:${currentUser?.email}`}>
             {currentUser?.email}
           </a>
         </div>

@@ -85,6 +85,8 @@ section.tourDetailsSection {
           width: 3.3rem;
           height: 3.3rem;
           border-radius: 10px;
+          background-color: $skyBlue-color;
+          object-fit: cover;
         }
 
         div {
@@ -166,4 +168,10 @@ section.tourDetailsSection {
 
 .svg-fill {
   fill: red;
+}
+
+a {
+  text-decoration: none;
+  color: $darkPink-color;
+  font-size: 0.87rem;
 }

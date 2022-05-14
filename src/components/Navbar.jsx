@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setLoggedInUserValue } from '../redux/features/userSlice';
-import { setAllToursValue, setTourValue } from '../redux/features/tourSlice';
+import {
+  getToursBySearchThunk,
+  setAllToursValue,
+  setTourValue,
+} from '../redux/features/tourSlice';
 import '../sass/components/Navbar.scss';
-import RedirectToLogin from './RedirectToLogin';
+import searchIcon from '../assets/svg/search-icon.svg';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState();
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 
   const { loggedInUser } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logout = () => {
     // This line is to remove req.user from BE as well
@@ -34,6 +41,18 @@ const Navbar = () => {
   const avatarBtnElRef = useRef();
   const hamburgerMenuElRef = useRef();
   const hamburgerBtnElRef = useRef();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    // Do something with searchTerm
+    console.log(searchTerm);
+    if (searchTerm) {
+      dispatch(getToursBySearchThunk(searchTerm));
+      navigate(`/tour/search?searchQuery=${searchTerm}`);
+    } else {
+      toast('Please enter a search term');
+    }
+  };
 
   useEffect(() => {
     let handler = (event) => {
@@ -80,6 +99,20 @@ const Navbar = () => {
 
         {/* Nav Links + User Avatar */}
         <nav className="navbar__desktop-links-and-avatar">
+          {/* Search Bar */}
+          <form onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search Tours"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="submit" className="search-btn">
+              <img src={searchIcon} alt="" />
+            </button>
+          </form>
+
           {/* Desktop View - Nav Links */}
           <div className="navbar__desktop-links">
             <Link className="navLinks clr-black" to="/">
@@ -204,15 +237,39 @@ const Navbar = () => {
                   Dashboard
                 </Link>
 
+                {/* Search Bar */}
+                <form onSubmit={handleSearchSubmit}>
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Search Tours"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <button type="submit" className="search-btn">
+                    <img src={searchIcon} alt="" />
+                  </button>
+                </form>
+
                 {/* Mobile View - User Avatar */}
                 <ul className="avatarMenu avatarMenuMobile">
+                  <li>
+                    <button onClick={() => logout()} className="navBtn ">
+                      Logout
+                    </button>
+                  </li>
+
                   <div className="avatarMenuMobile__top">
                     <div className="avatarMenuMobile__top-text">
                       <li>
-                        <b>{loggedInUser?.name}</b>
+                        <Link to={`/user/${loggedInUser.id}`}>
+                          <b>{loggedInUser?.name}</b>
+                        </Link>
                       </li>
 
-                      <li>{loggedInUser?.email}</li>
+                      <li>
+                        <Link to={`/user/${loggedInUser.id}`}>{loggedInUser?.email}</Link>
+                      </li>
                     </div>
 
                     <li>
@@ -224,12 +281,6 @@ const Navbar = () => {
                       />
                     </li>
                   </div>
-
-                  <li>
-                    <button onClick={() => logout()} className="navBtn ">
-                      Logout
-                    </button>
-                  </li>
                 </ul>
               </>
             )}

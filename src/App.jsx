@@ -16,6 +16,8 @@ import UserDetails from './pages/UserDetails';
 import { getLoggedInUserThunk } from './redux/features/userSlice';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import NotFound from './pages/NotFound';
+import SearchResultsPage from './pages/SearchResultsPage';
+import TaggedTours from './pages/TaggedTours';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -83,6 +85,12 @@ const App = () => {
           <Route path="/tour/:id" element={<TourDetails />} />
           {/* Fetch any user's details (For creator profilePic, etc.) */}
           <Route path="/user/:id" element={<UserDetails />} />
+
+          {/* Search tours */}
+          <Route path="/tour/search" element={<SearchResultsPage />} />
+
+          {/* Find Tagged tours */}
+          <Route path="/tour/tag/:tag" element={<TaggedTours />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

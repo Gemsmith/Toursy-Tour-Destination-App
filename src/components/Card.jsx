@@ -63,7 +63,7 @@ const Card = ({
           </Link>
           <p className="tags">
             {tags.map((tag) => {
-              return `#${tag} `;
+              return <Link to={`/tour/tag/${tag} `}>#{tag} </Link>;
             })}
           </p>
         </div>

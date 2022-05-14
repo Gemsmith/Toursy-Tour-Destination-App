@@ -20,7 +20,6 @@ export const getLoggedInUserThunk = () => async (dispatch, getState) => {
 
 export const getUserByIdThunk = (userId) => async (dispatch, getState) => {
   dispatch(setLoadingValue(true));
-
   try {
     const response = await api.getUserFromServerAPI(userId);
     dispatch(setCurrentUserValue(response.data.user));

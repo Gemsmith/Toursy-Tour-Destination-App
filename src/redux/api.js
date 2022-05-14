@@ -78,3 +78,11 @@ export const getTourAPI = (tourId) => {
 export const getUsersToursAPI = (userId) => {
   return API.get(`/tour/usersTours/${userId}`, { withCredentials: true });
 };
+
+export const getToursBySearchAPI = (searchQuery) => {
+  return API.get(`/tour/search?searchQuery=${searchQuery}`);
+};
+
+export const getToursByTagAPI = (tag) => {
+  return API.get(`/tour/tag/${tag}`);
+};

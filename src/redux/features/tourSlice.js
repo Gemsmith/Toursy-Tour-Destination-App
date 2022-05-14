@@ -152,9 +152,46 @@ export const deleteTourThunk = (tourId) => async (dispatch, getState) => {
   }
 };
 
+export const getToursBySearchThunk = (searchQuery) => async (dispatch, getState) => {
+  dispatch(setLoadingValue(true));
+
+  try {
+    const response = await api.getToursBySearchAPI(searchQuery);
+    console.log('Searched Tours: ', response.data);
+    dispatch(setSearchedToursValue(response.data.searchedTours));
+    dispatch(setLoadingValue(false));
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+    dispatch(setLoadingValue(false));
+  }
+};
+
+export const getToursByTagThunk = (tag) => async (dispatch, getState) => {
+  dispatch(setLoadingValue(true));
+
+  try {
+    const response = await api.getToursByTagAPI(tag);
+    console.log('Tagged Tours: ', response.data);
+    dispatch(setTaggedToursValue(response.data.taggedTours));
+    dispatch(setLoadingValue(false));
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+    dispatch(setLoadingValue(false));
+  }
+};
+
 //====================================================================================================
 // Slice Config & Export
-const initialState = { tour: null, allTours: null, usersTours: null, loading: false };
+const initialState = {
+  tour: {},
+  allTours: [],
+  usersTours: [],
+  searchedTours: [],
+  taggedTours: [],
+  loading: false,
+};
 
 const tourSlice = createSlice({
   name: 'tour',
@@ -175,9 +212,23 @@ const tourSlice = createSlice({
     setUsersToursValue: (state, action) => {
       state.usersTours = action.payload;
     },
+
+    setSearchedToursValue: (state, action) => {
+      state.searchedTours = action.payload;
+    },
+
+    setTaggedToursValue: (state, action) => {
+      state.taggedTours = action.payload;
+    },
   },
 });
 
-export const { setLoadingValue, setTourValue, setAllToursValue, setUsersToursValue } =
-  tourSlice.actions;
+export const {
+  setLoadingValue,
+  setTourValue,
+  setAllToursValue,
+  setUsersToursValue,
+  setSearchedToursValue,
+  setTaggedToursValue,
+} = tourSlice.actions;
 export default tourSlice.reducer;
