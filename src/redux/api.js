@@ -86,3 +86,7 @@ export const getToursBySearchAPI = (searchQuery) => {
 export const getToursByTagAPI = (tag) => {
   return API.get(`/tour/tag/${tag}`);
 };
+
+export const getRelatedToursAPI = (tags) => {
+  return API.post(`/tour/relatedTours`, tags);
+};

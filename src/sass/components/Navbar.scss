@@ -267,6 +267,7 @@ a.navLinks {
   transition: 0.3s;
   width: max-content;
 
+  // Desktop View - Hover effect on link
   @media screen and (min-width: 768px) {
     color: inherit;
 
@@ -284,14 +285,22 @@ a.navLinks {
       transition: 0.3s;
     }
 
+    &:hover {
+      color: $dodgerBlue-color;
+    }
+
+    // This puts an effect on the underline
     &:hover::after {
       transform: scaleX(1);
     }
   }
 
-  &:hover {
-    color: $dodgerBlue-color;
-    background-color: #fff;
+  // Mobile View - Hover effect on link
+  @media screen and (max-width: 768px) {
+    &:hover {
+      background-color: #fff;
+      color: $dodgerBlue-color;
+    }
   }
 }
 

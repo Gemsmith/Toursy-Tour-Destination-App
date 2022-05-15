@@ -16,10 +16,6 @@ const Dashboard = () => {
 
   const userId = loggedInUser?._id;
 
-  const handleUpdateTour = (tourId) => {
-    // dispatch(updateTourThunk(tourId));
-  };
-
   const handleDeleteTour = (tourId) => {
     if (window.confirm('Are you sure you want to delete this tour?')) {
       dispatch(deleteTourThunk(tourId));
@@ -39,7 +35,7 @@ const Dashboard = () => {
       <div className="dashboard-tours__container">
         {usersTours?.length === 0 ? (
           <p>
-            No tours found! Click <Link to="/login">here</Link> to start creating
+            No tours found! Click <Link to="/addtour">here</Link> to start creating
             memories!
           </p>
         ) : (
@@ -50,10 +46,7 @@ const Dashboard = () => {
                   <Card key={index} {...tour} />
 
                   <div className="card__wrapper-buttons__container">
-                    <Link
-                      to={`/editTour/${tour._id}`}
-                      onClick={() => handleUpdateTour(tour._id)}
-                    >
+                    <Link to={`/editTour/${tour._id}`}>
                       <img src={editIcon} alt="" className="svg-icons" />
                     </Link>
                     <button onClick={() => handleDeleteTour(tour._id)}>

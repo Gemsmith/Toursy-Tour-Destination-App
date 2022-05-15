@@ -10,6 +10,8 @@ import {
 import '../sass/components/Navbar.scss';
 import searchIcon from '../assets/svg/search-icon.svg';
 import { toast } from 'react-toastify';
+import { formattedDate } from '../utils/dateFormatter';
+import { logoutThunk } from '../redux/features/authSlice';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,18 +24,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    // This line is to remove req.user from BE as well
-    window.open('http://localhost:5000/auth/logout', '_self');
-    // Remove the user, persistedStates from redux store
-    // I can't figure out how to use redux-persist's PURGE to empty the store.
-    // So we'll set all state variables to null for now.
-    // Remove them from localStorage as well
-    localStorage.removeItem('user');
-    localStorage.setItem('persist:tours_app', null);
-    // And remove the persist data from localStorage to prevent REHYDRATING the store back after logout.
-    dispatch(setLoggedInUserValue(null)); // Auth Slice PURGING
-    dispatch(setTourValue(null)); // Tour Slice PURGING
-    dispatch(setAllToursValue(null)); // Tour Slice PURGING
+    dispatch(logoutThunk());
   };
 
   // Menu Toggle Functionality:
@@ -137,6 +128,9 @@ const Navbar = () => {
               <>
                 <Link className="navLinks clr-black" to="/addTour">
                   Add Tour
+                </Link>
+                <Link className="navLinks clr-black" to={`/user/${loggedInUser._id}`}>
+                  Profile
                 </Link>
                 <Link className="navLinks clr-black" to="/dashboard">
                   Dashboard

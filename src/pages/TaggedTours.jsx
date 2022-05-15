@@ -28,7 +28,7 @@ const TaggedTours = () => {
       <div className="taggedTours-container">
         {taggedTours?.length === 0 ? (
           <p>
-            No tours found! Click <Link to="/login">here</Link> to start creating
+            No tours found! Click <Link to="/addtour">here</Link> to start creating
             memories!
           </p>
         ) : (

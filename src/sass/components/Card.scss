@@ -1,7 +1,5 @@
 @import '../variables.scss';
-@mixin transition {
-  transition: all 0.2s ease-in-out;
-}
+@import '../utilities.scss';
 
 $card-border-radius: 0.5rem;
 
@@ -40,7 +38,7 @@ $card-border-radius: 0.5rem;
     .creatorName {
       position: absolute;
       opacity: 1;
-      top: 1.6rem;
+      top: 1.2rem;
       left: 1rem;
       font-size: 0.8rem;
       color: $white-color;
@@ -56,7 +54,7 @@ $card-border-radius: 0.5rem;
     .createdAt {
       position: absolute;
       opacity: 0.5;
-      top: 2.7rem;
+      top: 2.2rem;
       left: 1rem;
       font-size: 0.8rem;
       color: $white-color;

@@ -10,3 +10,7 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@mixin transition {
+  transition: all 0.2s ease-in-out;
+}

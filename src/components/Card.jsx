@@ -62,8 +62,12 @@ const Card = ({
             <p className="title">{truncate(title, 21)}</p>
           </Link>
           <p className="tags">
-            {tags.map((tag) => {
-              return <Link to={`/tour/tag/${tag} `}>#{tag} </Link>;
+            {tags.map((tag, index) => {
+              return (
+                <Link key={index} to={`/tour/tag/${tag} `}>
+                  #{tag}{' '}
+                </Link>
+              );
             })}
           </p>
         </div>

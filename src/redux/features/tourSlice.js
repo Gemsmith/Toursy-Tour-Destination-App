@@ -182,6 +182,21 @@ export const getToursByTagThunk = (tag) => async (dispatch, getState) => {
   }
 };
 
+export const getRelatedToursThunk = (tags) => async (dispatch, getState) => {
+  dispatch(setLoadingValue(true));
+
+  try {
+    const response = await api.getRelatedToursAPI(tags);
+    console.log('Related Tours: ', response.data);
+    dispatch(setRelatedToursValue(response.data.relatedTours));
+    dispatch(setLoadingValue(false));
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+    dispatch(setLoadingValue(false));
+  }
+};
+
 //====================================================================================================
 // Slice Config & Export
 const initialState = {
@@ -190,6 +205,7 @@ const initialState = {
   usersTours: [],
   searchedTours: [],
   taggedTours: [],
+  relatedTours: [],
   loading: false,
 };
 
@@ -220,6 +236,9 @@ const tourSlice = createSlice({
     setTaggedToursValue: (state, action) => {
       state.taggedTours = action.payload;
     },
+    setRelatedToursValue: (state, action) => {
+      state.relatedTours = action.payload;
+    },
   },
 });
 
@@ -230,5 +249,6 @@ export const {
   setUsersToursValue,
   setSearchedToursValue,
   setTaggedToursValue,
+  setRelatedToursValue,
 } = tourSlice.actions;
 export default tourSlice.reducer;

@@ -18,6 +18,7 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import NotFound from './pages/NotFound';
 import SearchResultsPage from './pages/SearchResultsPage';
 import TaggedTours from './pages/TaggedTours';
+import { logoutThunk } from './redux/features/authSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,9 +32,19 @@ const App = () => {
       // dispatch the action to get user from server. We needed to implement this fetching because for social logins passportJs can only do a redirect on successful authentication. Which means we can't send a res.json to the server with {user}, can only do a res.redirect('/something'). So after a social login, on the client we have to look if we have a user in local storage and fetch him otherwise.
       // This dispatch action will also set the user in the store & localStorage
       dispatch(getLoggedInUserThunk());
-      // And then also set the user in the component's state
       return;
-    } // eslint-disable-next-line
+    } else {
+      // We want to logOut the user if the session has been expired at the server. So that's why we have added a expiryDate in the user object before storing loggedIn user's data at localStorage.
+      // And after logoutThunk is done, ProtectedRoutes component will automatically redirect to the login page, becuase it checks for loggedInUser in state to let the client access protected pages, which will now be null.
+      if (
+        Date.parse(new Date().toUTCString()) >
+        Date.parse(new Date(isUserAtLocalStorage?.cookieExpiry))
+      ) {
+        dispatch(logoutThunk());
+      }
+    }
+
+    // eslint-disable-next-line
   }, []);
 
   return (
