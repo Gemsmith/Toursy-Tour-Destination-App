@@ -200,6 +200,35 @@ export const getRelatedToursThunk = (tags) => async (dispatch, getState) => {
   }
 };
 
+export const likeTourThunk = (tourId) => async (dispatch, getState) => {
+  // So on every like button click, settign loading to true would have made the page have a loading spinner.
+  // So we're not implementing loading for the like and unlike actions.
+  // dispatch(setLoadingValue(true));
+
+  try {
+    const response = await api.likeTourAPI(tourId);
+    console.log('Tour updated with Like:', response.data);
+
+    // Updating FE's "allTours" without calling BE
+    const { allTours } = getState().tour;
+    const updatedAllTours = allTours.map((tour) =>
+      tour._id === tourId ? response.data.updatedLikesTour : tour
+    );
+    dispatch(setAllToursValue(updatedAllTours));
+
+    // Updating FE's "usersTours" States without calling BE
+    const { usersTours } = getState().tour;
+    const updatedTours = usersTours.map((tour) =>
+      tour._id === tourId ? response.data.updatedLikesTour : tour
+    );
+    dispatch(setUsersToursValue(updatedTours));
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+    dispatch(setLoadingValue(false));
+  }
+};
+
 //====================================================================================================
 // Slice Config & Export
 const initialState = {

@@ -46,7 +46,6 @@ $card-border-radius: 0.5rem;
 
   .creatorName {
     position: absolute;
-    opacity: 1;
     top: 0.9rem;
     left: 1rem;
     font-size: 0.8rem;
@@ -54,6 +53,11 @@ $card-border-radius: 0.5rem;
     font-weight: 500;
     cursor: pointer;
     @include transition;
+
+    &:hover {
+      font-weight: 600;
+      color: $black-color;
+    }
   }
 
   .createdAt {

@@ -90,3 +90,7 @@ export const getToursByTagAPI = (tag) => {
 export const getRelatedToursAPI = (tags) => {
   return API.post(`/tour/relatedTours`, tags);
 };
+
+export const likeTourAPI = (tourId) => {
+  return API.patch(`/tour/like/${tourId}`, {}, { withCredentials: true });
+};
