@@ -67,8 +67,8 @@ export const deleteTourAPI = (tourId) => {
   return API.delete(`/tour/${tourId}`, { withCredentials: true });
 };
 
-export const getAllToursAPI = () => {
-  return API.get('/tour');
+export const getAllToursAPI = (page) => {
+  return API.get(`/tour?page=${page}`);
 };
 
 export const getTourAPI = (tourId) => {

@@ -119,7 +119,7 @@ section.login {
           margin-top: 0.5rem;
           height: 2.5rem;
           line-height: 0.5rem;
-          padding: 0.8rem 0;
+          // padding: 0.8rem 0;
           background-color: $secondary-color;
           color: $white-color;
           font-size: 0.875rem;
@@ -135,9 +135,11 @@ section.login {
           }
 
           svg {
-            position: absolute;
-            top: 0.5rem;
-            left: 60%;
+            // position: absolute;
+            // position: relative;
+            // top: 0.5rem;
+            // left: 50px;
+            // margin: 0 auto;
             // transform: translate(-50%, -50%);
           }
         }

@@ -34,16 +34,19 @@ export const createNewTourThunk = (tourData) => async (dispatch, getState) => {
 };
 
 // Is called at every app render.
-export const getAllToursThunk = () => async (dispatch, getState) => {
+export const getAllToursThunk = (page) => async (dispatch, getState) => {
   dispatch(setLoadingValue(true));
 
   try {
-    const response = await api.getAllToursAPI();
-
+    const response = await api.getAllToursAPI(page);
+    console.log(response.data);
     if (response.data.status === 'success') {
       console.log('All Tours: ', response.data);
       dispatch(setLoadingValue(false));
-      dispatch(setAllToursValue(response.data.allTours));
+      // dispatch(setAllToursValue(response.data.allTours));
+      dispatch(setAllToursValue(response.data.paginatedTours));
+      dispatch(setNumberOfPagesValue(response.data.numberOfPages));
+      dispatch(setCurrentPageValue(response.data.currentPage));
     }
   } catch (error) {
     console.log(error);
@@ -200,6 +203,8 @@ export const getRelatedToursThunk = (tags) => async (dispatch, getState) => {
 //====================================================================================================
 // Slice Config & Export
 const initialState = {
+  currentPage: 1,
+  numberOfPages: 0,
   tour: {},
   allTours: [],
   usersTours: [],
@@ -219,6 +224,14 @@ const tourSlice = createSlice({
 
     setTourValue: (state, action) => {
       state.tour = action.payload;
+    },
+
+    setCurrentPageValue: (state, action) => {
+      state.currentPage = action.payload;
+    },
+
+    setNumberOfPagesValue: (state, action) => {
+      state.numberOfPages = action.payload;
     },
 
     setAllToursValue: (state, action) => {
@@ -250,5 +263,7 @@ export const {
   setSearchedToursValue,
   setTaggedToursValue,
   setRelatedToursValue,
+  setCurrentPageValue,
+  setNumberOfPagesValue,
 } = tourSlice.actions;
 export default tourSlice.reducer;

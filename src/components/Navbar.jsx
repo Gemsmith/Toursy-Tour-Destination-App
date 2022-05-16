@@ -5,6 +5,7 @@ import { setLoggedInUserValue } from '../redux/features/userSlice';
 import {
   getToursBySearchThunk,
   setAllToursValue,
+  setCurrentPageValue,
   setTourValue,
 } from '../redux/features/tourSlice';
 import '../sass/components/Navbar.scss';
@@ -15,7 +16,7 @@ import { logoutThunk } from '../redux/features/authSlice';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState();
+  const [searchTerm, setSearchTerm] = useState('');
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 
   const { loggedInUser } = useSelector((state) => state.user);
@@ -105,8 +106,13 @@ const Navbar = () => {
           </form>
 
           {/* Desktop View - Nav Links */}
+          {/* On click will always make sure click on Home brings us back to page 1 */}
           <div className="navbar__desktop-links">
-            <Link className="navLinks clr-black" to="/">
+            <Link
+              className="navLinks clr-black"
+              to="/"
+              onClick={() => dispatch(setCurrentPageValue(1))}
+            >
               Home
             </Link>
 

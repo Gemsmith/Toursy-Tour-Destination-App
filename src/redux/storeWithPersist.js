@@ -27,7 +27,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 // NOTE: we needed to get it from the state.auth, this is where this key comes in use.
 // export default configureStore({ reducer: { auth: persistedReducer } });
 
-export const storeWithPersist = configureStore({
+export const store = configureStore({
   // reducer: { auth: persistedReducer },
   reducer: persistedReducer, // https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
   // Need to provide these last few lines, because redux-persist throws an error:

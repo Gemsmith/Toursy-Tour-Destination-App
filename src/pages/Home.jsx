@@ -1,18 +1,34 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
-import { getAllToursThunk } from '../redux/features/tourSlice';
+import { getAllToursThunk, setCurrentPageValue } from '../redux/features/tourSlice';
 import SpinnerLoader from '../components/Spinner';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import '../sass/pages/Home.scss';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
-  const { allTours, loading } = useSelector((state) => state.tour);
+  const { allTours, loading, currentPage, numberOfPages } = useSelector(
+    (state) => state.tour
+  );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Just adding this logic by myself: Add a pane no. in the query string in url path in address bar
+  // On pages where pagination comp. loads, useEffect will take whatever pageNo. is there in url
+  // set it in currentPage, which will load 'Home' comp. in the browser. Since on change in currentPage,
+  // a re-render is done (bcoz), it is added as a dependency in "Home" comp.'s useEffect.
+  // NEED TO LEARN how we can make it so that if user manually enters a page number inthe address bar, that page should load.
+  // Right now using the setCurrentPageValue(), is causing infinite re-renders. Whereas we can successfully do the
+  // same via the pagination's next and prev buttons. No idea why it's causing infinite loop.
+  // Catch pagenumber from url's query params below:
+  // const [page, setPageParams] = useSearchParams();
+  // const pageNumber = page.get('page');
 
   useEffect(() => {
-    dispatch(getAllToursThunk());
-  }, []);
+    navigate(`/tour?page=${currentPage}`);
+    dispatch(getAllToursThunk(currentPage));
+  }, [currentPage]);
 
   return loading ? (
     <SpinnerLoader />
@@ -30,6 +46,7 @@ const Home = () => {
           </div>
         )}
       </div>
+      <Pagination {...{ currentPage, setCurrentPageValue, numberOfPages, dispatch }} />
     </section>
   );
 };

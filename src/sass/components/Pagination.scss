@@ -1,0 +1,70 @@
+@import '../variables.scss';
+
+.pagination {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  .pagenumber {
+    text-align: center;
+    background-color: $lightBlue-color;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    font-size: 0.84rem;
+  }
+
+  button {
+    border: none;
+    background: none;
+  }
+
+  .next-page-button,
+  .prev-page-button {
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    height: 100%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: $cutePink-color;
+    box-shadow: 0 6px darken($cutePink-color, 10%);
+    border: none;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+    color: white;
+    transition: all 0.1s ease;
+
+    &:hover {
+      background-color: $cutePink-color;
+    }
+
+    &:active {
+      box-shadow: 0 4px darken($cutePink-color, 5%);
+      transform: translateY(1.5px);
+    }
+  }
+
+  .prev-page-button {
+    background-color: $primary-color;
+    box-shadow: 0 6px darken($primary-color, 10%);
+    color: black;
+
+    &:hover {
+      background-color: $primary-color;
+    }
+
+    &:active {
+      box-shadow: 0 4px darken($primary-color, 10%);
+      transform: translateY(1.5px);
+    }
+
+    button {
+      color: $darkBlue-color;
+      font-weight: bold;
+    }
+  }
+}

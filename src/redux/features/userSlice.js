@@ -12,14 +12,17 @@ export const getLoggedInUserThunk = () => async (dispatch, getState) => {
 
     // Apart from just loginLocal, passportJS has no way of sending res.json with which we could send cookieExpiry on successful login.
     // It only gives redirect options, so for social logins this method is called anyway to store social user at localStorage, thus we send the cookieExpiry to this route as well. So now we have cookieExpiry added to both local & social logins.
-    const userData = {
-      ...response.data.user,
-      cookieExpiry: response.data.cookieExpiresIn,
-    };
 
-    localStorage.setItem('user', JSON.stringify(userData));
-    dispatch(setLoggedInUserValue(userData));
-    dispatch(setLoadingValue(false));
+    if (response.data.status === 'success') {
+      const userData = {
+        ...response.data.user,
+        cookieExpiry: response.data.cookieExpiresIn,
+      };
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      dispatch(setLoggedInUserValue(userData));
+      dispatch(setLoadingValue(false));
+    }
   } catch (error) {
     dispatch(setLoadingValue(false));
     console.log(error);

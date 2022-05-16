@@ -27,7 +27,7 @@ export const localLoginThunk = (loginFormDataObject) => async (dispatch, getStat
       localStorage.setItem('user', JSON.stringify(userData));
       dispatch(setLoggedInUserValue(userData));
       dispatch(setLoadingValue(false));
-      // window.location.href = '/';
+      window.location.href = '/';
       return;
     } else if (response.data.status === 'error') {
       toast.error(response.data.message);
@@ -87,7 +87,7 @@ export const logoutThunk = () => async (dispatch, getState) => {
     dispatch(setLoggedInUserValue(null)); // Auth Slice PURGING
     dispatch(setTourValue(null)); // Tour Slice PURGING
     dispatch(setAllToursValue(null)); // Tour Slice PURGING
-    dispatch(setLoadingValue(true));
+    dispatch(setLoadingValue(false));
     toast.success('Logged out successfully!');
   } catch (error) {
     dispatch(setLoadingValue(true));

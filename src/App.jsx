@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Signup from './pages/Signup';
 import LoginFailed from './pages/LoginFailed';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import AddEditTour from './pages/AddEditTour';
@@ -22,24 +22,26 @@ import { logoutThunk } from './redux/features/authSlice';
 
 const App = () => {
   const dispatch = useDispatch();
+  const isUserAtLocalStorage = JSON.parse(localStorage.getItem('user'));
+
   // As soon as our app loads we want to fetch any user that has already loggedIn previously. So that we can display their username in the navbar and also it's better UX, because otherwise as soon as they refresh the page, the navbar will show the login button, and they'd have to login again. Unless we store the loggedIn user via some state persistence functionality.
   useEffect(() => {
     // Check to find the user in the localStorage
-    const isUserAtLocalStorage = localStorage.getItem('user');
 
     // Only, if user is not in localStorage
     if (!isUserAtLocalStorage) {
       // dispatch the action to get user from server. We needed to implement this fetching because for social logins passportJs can only do a redirect on successful authentication. Which means we can't send a res.json to the server with {user}, can only do a res.redirect('/something'). So after a social login, on the client we have to look if we have a user in local storage and fetch him otherwise.
       // This dispatch action will also set the user in the store & localStorage
       dispatch(getLoggedInUserThunk());
-      return;
     } else {
       // We want to logOut the user if the session has been expired at the server. So that's why we have added a expiryDate in the user object before storing loggedIn user's data at localStorage.
       // And after logoutThunk is done, ProtectedRoutes component will automatically redirect to the login page, becuase it checks for loggedInUser in state to let the client access protected pages, which will now be null.
+      // If current time in milliseconds gets higher than cookie expiry time.. Do something
       if (
         Date.parse(new Date().toUTCString()) >
         Date.parse(new Date(isUserAtLocalStorage?.cookieExpiry))
       ) {
+        toast('Session Expired - Logging Out');
         dispatch(logoutThunk());
       }
     }
@@ -92,6 +94,7 @@ const App = () => {
           />
           {/* =============PROTECTED ROUTES END==================== */}
 
+          <Route path="/tour" element={<Home />} />
           {/* View a tour's details */}
           <Route path="/tour/:id" element={<TourDetails />} />
           {/* Fetch any user's details (For creator profilePic, etc.) */}
