@@ -6,11 +6,6 @@
   background: none;
 }
 
-button {
-  border: none;
-  background: none;
-}
-
 section.add__edit__tour {
   form {
     padding: 1.5rem 1.2rem;
@@ -23,12 +18,6 @@ section.add__edit__tour {
     gap: 2rem;
 
     div {
-      label {
-        display: block;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-      }
-
       input,
       textarea {
         background-color: rgb(231, 254, 255);
@@ -94,7 +83,6 @@ section.add__edit__tour {
 
   .add__edit__tour-imageUpload {
     width: 100%;
-    display: flex;
 
     input {
       background-color: transparent;
@@ -160,44 +148,51 @@ section.add__edit__tour {
       }
     }
   }
-}
 
-.error-bg {
-  background-color: $salmon-color;
-}
-
-.input-warning {
-  color: $cutePink-color;
-  position: absolute;
-  bottom: -1.2rem;
-  left: 0;
-}
-
-// Picks the file input's text's styles
-input[type='file'] {
-  background-color: transparent;
-  // font-weight: bold;
-}
-
-// Picks the file input's box's styles
-input[type='file' i]::-webkit-file-upload-button {
-  border-radius: 5px;
-  padding: 0.5rem 0.75rem;
-  height: 100%;
-  width: 30%;
-  font-weight: bold;
-  background-color: #f79159;
-  box-shadow: 0 6px darken(#f79159, 10%);
-  border: none;
-  color: white;
-  transition: all 0.1s ease;
-
-  &:hover {
-    background-color: #fd9862;
+  label {
+    display: block;
+    width: 100%;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
   }
 
-  &:active {
-    box-shadow: 0 4px darken(#f79159, 10%);
-    transform: translateY(1.5px);
+  .error-bg {
+    background-color: $salmon-color;
+  }
+
+  .input-warning {
+    color: $cutePink-color;
+    position: absolute;
+    bottom: -1.2rem;
+    left: 0;
+  }
+
+  // Picks the file input's text's styles
+  input[type='file'] {
+    background-color: transparent;
+    padding: 0 0 0.5rem 0rem;
+  }
+
+  // Picks the file input's box's styles
+  input[type='file' i]::-webkit-file-upload-button {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    height: fit-content;
+    width: fit-content;
+    font-weight: bold;
+    background-color: #f79159;
+    box-shadow: 0 6px darken(#f79159, 10%);
+    border: none;
+    color: white;
+    transition: all 0.1s ease;
+
+    &:hover {
+      background-color: #fd9862;
+    }
+
+    &:active {
+      box-shadow: 0 4px darken(#f79159, 10%);
+      transform: translateY(1.5px);
+    }
   }
 }

@@ -14,7 +14,8 @@ const AddEditTour = () => {
   const { loggedInUser } = useSelector((state) => state.user);
   const { usersTours } = useSelector((state) => state.tour);
 
-  // Component States
+  // Creating local state to store image file. Because we'll add it manually to the form's data before submitting.
+  // It's a hassle to do it via react-hook-form's inbuilt functionality.
   const [fileData, setFileData] = useState(null);
 
   // --------------EDIT TOUR FUNCTIONALITY START---------------------------------
@@ -217,6 +218,9 @@ const AddEditTour = () => {
            */}
         {/* But for now I am just creating a FileBase tag that will add the base64 to a state variable, and I'll just attach that to the form data created by react-hook-form before uploading to server */}
         <div className="add__edit__tour-imageUpload">
+          <label htmlFor="file" className="">
+            Image
+          </label>
           <FileBase64
             id="file"
             className="file-input"

@@ -8,7 +8,7 @@ section.search {
   .seach-container-grid {
     display: grid;
     // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
     justify-content: center;
     margin: 0 auto;
     gap: 1rem;

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as api from '../api';
 import { setAllToursValue, setTourValue } from './tourSlice';
@@ -8,7 +9,6 @@ import { setLoggedInUserValue } from './userSlice';
 
 //====================================================================================================
 // Action Creators
-
 export const localLoginThunk = (loginFormDataObject) => async (dispatch, getState) => {
   dispatch(setLoadingValue(true));
 
@@ -44,7 +44,8 @@ export const localLoginThunk = (loginFormDataObject) => async (dispatch, getStat
 export const localSignupThunk = (signupFormDataObject) => async (dispatch, getState) => {
   dispatch(setLoadingValue(true));
 
-  const { email, password, cPassword, firstName, lastName } = signupFormDataObject;
+  const { email, password, cPassword, firstName, lastName, userAvatar } =
+    signupFormDataObject;
 
   try {
     const response = await api.localSignupAPI(
@@ -52,13 +53,14 @@ export const localSignupThunk = (signupFormDataObject) => async (dispatch, getSt
       password,
       cPassword,
       firstName,
-      lastName
+      lastName,
+      userAvatar
     );
 
     if (response.data.status === 'success') {
       toast.success('User created successfully!');
       dispatch(setLoadingValue(false));
-      // window.location.href = '/';
+      window.location.href = '/login';
       return;
     } else if (response.data.status === 'error') {
       toast.error(response.data.message);

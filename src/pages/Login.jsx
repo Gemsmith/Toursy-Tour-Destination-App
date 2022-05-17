@@ -9,35 +9,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { localLoginThunk } from '../redux/features/authSlice';
 import SpinnerLoader from '../components/SpinnerLoader';
 import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
+import { useForm } from 'react-hook-form';
 
-const Login = () => {
+const Login3 = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
   // Social & Local Login/Signups are exported from src/store/api.js
   // Local is handled in handleSubmit below & Socials are handled in the onClick events of resp. social buttons
 
-  // For Local login
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  // --------------Form functionality START---------------------------------
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm();
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    const { email: loginEmail, password: loginPassword } = data;
 
-    const validateEmail = validate.email(loginEmail);
-    const validatePassword = validate.password(loginPassword);
-
-    if (validateEmail?.status === 'error' || validatePassword?.status === 'error') {
-      console.log(`Validation Error`);
-      toast.error(`${validateEmail.errorMessage}`);
-      toast.error(`${validatePassword.errorMessage}`);
-      return;
+    if (loginEmail && loginPassword) {
+      dispatch(localLoginThunk({ loginEmail, loginPassword }));
     }
-
-    // After our inputs are validated. Now we will make the call to the API. But for that we'll first call the action at the slice. Which will do state changes like loading, storing data at store etc. & most importantly handle the API call.
-    // So we will pass the input data to it, and it will forward it to the function that makes the API call.
-    dispatch(localLoginThunk({ loginEmail, loginPassword }));
   };
+
+  // --------------Form functionality END---------------------------------
+  // VALIDATION PATTERN - https://www.freecodecamp.org/news/add-form-validation-in-react-app-with-react-hook-form/
 
   return (
     <section className="login">
@@ -48,41 +46,54 @@ const Login = () => {
 
         <div className="login__forms-bottom ">
           {/* Local Login Form */}
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="login__forms-left">
               {/* Email Field */}
               <div className="login__forms-left-input">
-                <label htmlFor="email" className="">
+                <label className="" htmlFor="email">
                   Your Email
                 </label>
                 <input
-                  type="email"
+                  onKeyUp={() => trigger(`email`)}
                   id="email"
-                  name="email"
-                  placeholder="john@gmail.com"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  autoComplete="on"
+                  type="email"
+                  placeholder="Ex. john@gmail.com"
+                  {...register('email', {
+                    required: 'Required',
+                    pattern:
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  })}
                 />
+                {errors?.email && (
+                  <small className="input-warning">{errors.email.message}</small>
+                )}
               </div>
 
               {/* Password Field */}
               <div className="login__forms-left-input">
-                <label htmlFor="password" className="">
+                <label className="" htmlFor="password">
                   Your Password
+                  {/* <span className=""> *</span> */}
                 </label>
+
                 <input
-                  type="password"
+                  onKeyUp={() => trigger(`password`)}
                   id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  autoComplete="on"
+                  type="password"
+                  placeholder="Enter a password"
+                  {...register('password', {
+                    required: 'Required',
+                    minLength: { value: 5, message: 'Min. 5 chars.' },
+                  })}
                 />
+                {errors?.password && (
+                  <small className="input-warning">{errors.password.message}</small>
+                )}
               </div>
 
-              <p>We will not share your data with any third parties.</p>
+              <p className="login__forms-left-privacy-disclaimer">
+                We will not share your data with any third parties.
+              </p>
 
               {/* Submit Button */}
               <button type="submit" disabled={loading}>
@@ -121,4 +132,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login3;

@@ -21,10 +21,8 @@ export const createNewTourThunk = (tourData) => async (dispatch, getState) => {
       const { usersTours } = getState().tour;
       const newUsersTours = [...usersTours, response.data.newTour];
       dispatch(setUsersToursValue(newUsersTours));
-
       toast.success('Tour created successfully!');
-
-      // window.location.href = '/'
+      window.location.href = '/dashboard';
     }
   } catch (error) {
     console.log(error);
@@ -117,6 +115,7 @@ export const updateTourThunk =
         dispatch(setUsersToursValue(updatedTours));
 
         toast.success('Tour updated successfully');
+        window.location.href = `/tour/${tourId}`;
       }
     } catch (error) {
       console.log(error);

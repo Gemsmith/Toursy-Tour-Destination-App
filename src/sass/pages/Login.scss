@@ -14,7 +14,7 @@ section.login {
     justify-content: center;
     flex-direction: column;
 
-    padding: 1.5rem 3rem 3rem 3rem;
+    padding: 1.5rem;
     border-radius: 16px;
     overflow: auto;
 
@@ -26,7 +26,7 @@ section.login {
     -webkit-backdrop-filter: blur($blur-value);
 
     @media screen and (max-width: 1024px) {
-      padding: 2rem 1rem;
+      padding: 1rem;
       // background-color: red;
     }
 
@@ -38,7 +38,7 @@ section.login {
     }
 
     h1 {
-      padding: 0.5rem;
+      padding: 1rem 0.5rem;
       font-size: 1.5rem;
       font-weight: 600;
       color: $black-color;
@@ -57,7 +57,7 @@ section.login {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      padding: 2rem 0;
+      padding: 1rem 0;
       background-color: $white-color;
       border-radius: 15px;
 
@@ -81,11 +81,9 @@ section.login {
           margin: auto auto;
         }
 
-        svg {
-        }
-
         .login__forms-left-input {
-          margin-bottom: 1.5rem;
+          position: relative;
+          margin-bottom: 2.5rem;
 
           label {
             display: block;
@@ -99,7 +97,7 @@ section.login {
           input {
             display: block;
             padding: 0.625rem;
-            background-color: $primary-color;
+            background-color: rgb(231, 254, 255);
             font-size: 0.875rem;
             line-height: 1.25rem;
             width: 100%;
@@ -107,41 +105,45 @@ section.login {
             border-radius: 0.4rem;
             border-width: 1px;
             border-color: $lightGray-color;
+
+            &:focus {
+              outline: 2px solid rgb(154, 226, 255);
+            }
           }
         }
 
-        p {
+        .login__forms-left-privacy-disclaimer {
+          margin-top: 1rem;
           color: $gray-color;
           font-size: 0.75rem;
         }
 
         button {
-          position: relative;
           margin-top: 0.5rem;
-          height: 2.5rem;
-          line-height: 0.5rem;
-          // padding: 0.8rem 0;
-          background-color: $secondary-color;
-          color: $white-color;
-          font-size: 0.875rem;
-          font-weight: 500;
+          border-radius: 9px;
+          padding: 0.75rem 2rem;
+          font-weight: bold;
           text-align: center;
           width: 100%;
-          border: none;
-          border-radius: 0.5rem;
-          transition: all 0.2s ease-in-out;
+          transition: all 0.1s ease;
 
-          &:hover {
-            background-color: $hoverBlue-color;
+          @media screen and (max-width: 320px) {
+            font-size: 0.7rem;
+            height: auto;
+            padding: 0.6rem 1.2rem;
           }
 
-          svg {
-            // position: absolute;
-            // position: relative;
-            // top: 0.5rem;
-            // left: 50px;
-            // margin: 0 auto;
-            // transform: translate(-50%, -50%);
+          background-color: $dodgerBlue-color;
+          box-shadow: 0 6px darken($dodgerBlue-color, 10%);
+          color: white;
+
+          &:hover {
+            background-color: $dodgerBlue-color;
+          }
+
+          &:active {
+            box-shadow: 0 4px darken($dodgerBlue-color, 15%);
+            transform: translateY(1.5px);
           }
         }
       }
@@ -228,5 +230,12 @@ section.login {
         }
       }
     }
+  }
+
+  .input-warning {
+    color: $cutePink-color;
+    position: absolute;
+    bottom: -1.2rem;
+    left: 0;
   }
 }

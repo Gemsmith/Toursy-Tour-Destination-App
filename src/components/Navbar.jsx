@@ -222,11 +222,28 @@ const Navbar = () => {
                 <Link className="navLinks clr-blue" to="/signup">
                   Signup
                 </Link>
+
+                {/* Search Bar */}
+                <form onSubmit={handleSearchSubmit}>
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Search Tours"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <button type="submit" className="search-btn">
+                    <img src={searchIcon} alt="" />
+                  </button>
+                </form>
               </>
             ) : (
               <>
                 <Link className="navLinks clr-black" to="/addTour">
                   Add Tour
+                </Link>
+                <Link className="navLinks clr-black" to={`/user/${loggedInUser._id}`}>
+                  Profile
                 </Link>
                 <Link className="navLinks clr-black" to="/dashboard">
                   Dashboard
@@ -250,22 +267,26 @@ const Navbar = () => {
                 <ul className="avatarMenuMobile">
                   <div className="avatarMenuMobile-image-and-text">
                     <li>
-                      <img
-                        className=""
-                        src={loggedInUser?.profileImageUrl}
-                        referrerPolicy="no-referrer"
-                        alt=""
-                      />
+                      <Link to={`/user/${loggedInUser._id}`}>
+                        <img
+                          className=""
+                          src={loggedInUser?.profileImageUrl}
+                          referrerPolicy="no-referrer"
+                          alt=""
+                        />
+                      </Link>
                     </li>
                     <div className="avatarMenuMobile-text">
                       <li>
-                        <Link to={`/user/${loggedInUser.id}`}>
+                        <Link to={`/user/${loggedInUser._id}`}>
                           <b>{loggedInUser?.name}</b>
                         </Link>
                       </li>
 
                       <li>
-                        <Link to={`/user/${loggedInUser.id}`}>{loggedInUser?.email}</Link>
+                        <Link to={`/user/${loggedInUser._id}`}>
+                          {loggedInUser?.email}
+                        </Link>
                       </li>
                     </div>
                   </div>

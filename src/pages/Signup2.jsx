@@ -1,24 +1,20 @@
 import { useState } from 'react';
 import validate from '../utils/inputValidation.util';
-import '../sass/pages/Signup.scss';
+import '../sass/pages/Signup2.scss';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import fbLogo from '../assets/svg/fb-logo.svg';
 import googleLogo from '../assets/svg/google-logo.svg';
-import SpinnerLoader from '../components/SpinnerLoader';
 import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { localSignupThunk } from '../redux/features/authSlice';
 import { useForm } from 'react-hook-form';
-import FileBase64 from 'react-file-base64';
 
-const Signup = () => {
+const Signup2 = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.auth);
 
   // Social & Local Login/Signups are exported from src/store/api.js
   // Local Signup is handled in handleSubmit below & Socials are handled in the onClick events of resp. social buttons
-  const [fileData, setFileData] = useState(null);
 
   // --------------Form functionality START---------------------------------
   const {
@@ -29,21 +25,10 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const formData = { ...data, userAvatar: fileData };
+    const { email, password, firstName, lastName, cPassword } = data;
 
-    const {
-      fname: firstName,
-      lname: lastName,
-      password,
-      cPassword,
-      email,
-      userAvatar,
-    } = formData;
-
-    if (email && password && firstName && lastName && cPassword && userAvatar) {
-      dispatch(
-        localSignupThunk({ email, password, cPassword, firstName, lastName, userAvatar })
-      );
+    if (email && password && firstName && lastName && cPassword) {
+      dispatch(localSignupThunk({ email, password, cPassword, firstName, lastName }));
     }
   };
 
@@ -51,7 +36,7 @@ const Signup = () => {
   // VALIDATION PATTERN - https://www.freecodecamp.org/news/add-form-validation-in-react-app-with-react-hook-form/
 
   return (
-    <section className="signup">
+    <section className="signup2">
       <div className="signup__forms-container">
         {/* Heading */}
         <h1 className="">Sign Up</h1>
@@ -99,6 +84,27 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Email Field */}
+              <div className="signup__forms-local-input span-2-grid-cols">
+                <label htmlFor="email" className="">
+                  Email
+                </label>
+                <input
+                  onKeyUp={() => trigger(`email`)}
+                  id="email"
+                  type="email"
+                  placeholder="Ex. john@gmail.com"
+                  {...register('email', {
+                    required: 'Required',
+                    pattern:
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  })}
+                />
+                {errors?.email && (
+                  <small className="input-warning">{errors.email.message}</small>
+                )}
+              </div>
+
               {/* Password Field */}
               <div className="signup__forms-local-input span-2-grid-cols-responsive">
                 <label htmlFor="password" className="">
@@ -140,49 +146,13 @@ const Signup = () => {
                 )}
               </div>
 
-              {/* Email Field */}
-              <div className="signup__forms-local-input span-2-grid-cols">
-                <label htmlFor="email" className="">
-                  Email
-                </label>
-                <input
-                  onKeyUp={() => trigger(`email`)}
-                  id="email"
-                  type="email"
-                  placeholder="Ex. john@gmail.com"
-                  {...register('email', {
-                    required: 'Required',
-                    pattern:
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  })}
-                />
-                {errors?.email && (
-                  <small className="input-warning">{errors.email.message}</small>
-                )}
-              </div>
-
-              <div className="signup__forms-local-fileUpload">
-                <label htmlFor="file" className="">
-                  Avatar
-                </label>
-                <FileBase64
-                  id="file"
-                  className="file-input"
-                  type="file"
-                  multiple={false}
-                  onDone={({ base64 }) => {
-                    setFileData(base64);
-                  }}
-                />
-              </div>
-
-              <p className="signup__forms-local-privacy-disclaimer span-2-grid-cols">
+              <p className="span-2-grid-cols">
                 We will not share your data with any third parties.
               </p>
 
               {/* Submit Button */}
               <button type="submit" className="span-2-grid-cols">
-                {loading ? <SpinnerLoader /> : 'Signup'}
+                Submit
               </button>
             </div>
           </form>
@@ -217,4 +187,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signup2;

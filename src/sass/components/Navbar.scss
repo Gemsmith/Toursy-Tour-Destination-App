@@ -124,55 +124,73 @@
       gap: 0.5rem;
     }
   }
-}
 
-// Common Styles ---------------------------------------
-// Form
-form {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0.5rem 0;
+  // "form" commom style across Navbar.jsx
+  form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem auto;
 
-  .search-input {
-    width: 100%;
-    margin-left: 1rem;
-    border-radius: 0.25rem;
-    background-color: rgba($color: $lightBlue-color, $alpha: 0.6);
-    // background: $lightBlue-color;
-    border: 1px solid $lightBlue-color;
-    color: $darkBlue-color;
-    padding: 0.6rem 2.4rem 0.6rem 1rem;
+    .search-input {
+      width: 100%;
+      margin-left: 1rem;
+      border-radius: 0.25rem;
+      background-color: rgba($color: $lightBlue-color, $alpha: 0.6);
+      // background: $lightBlue-color;
+      border: 1px solid $lightBlue-color;
+      color: $darkBlue-color;
+      padding: 0.6rem 2.4rem 0.6rem 1rem;
 
-    &:focus {
-      box-shadow: 0 2px 18px 0 rgb(31 38 135 / 37%);
-      outline: none;
-      // border: 1px solid $dodgerBlue-color;
+      &:focus {
+        box-shadow: 0 2px 18px 0 rgb(31 38 135 / 37%);
+        outline: none;
+        // border: 1px solid $dodgerBlue-color;
+      }
+
+      @media screen and (max-width: 768px) {
+        margin-left: 0rem;
+        margin: auto;
+        width: calc(100vw - 2rem - 1rem);
+        padding: 0.6rem 0.6rem 0.6rem 2.4rem;
+      }
     }
 
-    @media screen and (max-width: 768px) {
-      margin-left: 0rem;
+    .search-btn {
+      position: absolute;
+      top: 50%;
+      right: 0.5rem;
+      transform: translate(0, -45%);
+      img {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
 
-      width: calc(100vw - 2rem);
-      padding: 0.6rem 0.6rem 0.6rem 2.4rem;
+      @media screen and (max-width: 768px) {
+        left: 0.5rem;
+        right: auto;
+        padding: 0.6rem 0.6rem 0.6rem 0rem;
+      }
     }
   }
 
-  .search-btn {
-    position: absolute;
-    top: 50%;
-    right: 0.5rem;
-    transform: translate(0, -45%);
-    img {
-      height: 1.5rem;
-      width: 1.5rem;
-    }
+  // "li" commom style across Navbar.jsx
+  li {
+    @include no-scrollbar-chrome;
+    list-style: none;
+    overflow: auto;
+    word-wrap: break-word;
+    word-break: break-all;
 
-    @media screen and (max-width: 768px) {
-      left: 0.5rem;
-      right: auto;
-      padding: 0.6rem 0.6rem 0.6rem 0rem;
+    a {
+      color: $darkBlue-color;
+      font-size: 0.75rem;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: scroll;
+      @include no-scrollbar-chrome;
+      @include no-scrollbar-others;
     }
   }
 }
@@ -218,6 +236,7 @@ form {
   gap: 0.3rem;
 
   .avatarMenuDesktop-button {
+    white-space: nowrap;
     padding: 1rem 0;
     width: 100%;
   }
@@ -228,7 +247,8 @@ form {
   border: 1px solid $lightBlue-color;
   border-radius: 6px;
   padding: 0.5rem;
-  width: calc(100vw - 2rem);
+  margin: auto;
+  width: calc(100vw - 2rem - 1rem);
   // gap: 0.3rem;
   // flex-direction: column;
   // align-items: flex-start;
@@ -244,7 +264,7 @@ form {
     gap: 0.6rem;
 
     .avatarMenuMobile-text {
-      width: calc(100vw - 2rem - 1.2rem - 2.4rem);
+      width: calc(100vw - 2rem - 1.2rem - 2.4rem - 1rem);
     }
 
     li {
@@ -258,34 +278,7 @@ form {
   }
 }
 
-// .navBtn {
-//   white-space: nowrap;
-//   font-size: 0.9rem;
-//   margin-top: 0.75rem;
-
-//   @media screen and (max-width: 768px) {
-//     margin-top: 0rem;
-//   }
-// }
-
 // AvatarMenu common styles btw mobile & desktop
-li {
-  @include no-scrollbar-chrome;
-  list-style: none;
-  overflow: auto;
-  word-wrap: break-word;
-  word-break: break-all;
-
-  a {
-    color: $darkBlue-color;
-    font-size: 0.75rem;
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: scroll;
-    @include no-scrollbar-chrome;
-    @include no-scrollbar-others;
-  }
-}
 
 // Targets all links with navLinks class
 a.navLinks {

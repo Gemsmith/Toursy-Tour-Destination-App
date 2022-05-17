@@ -43,12 +43,20 @@ export const localLoginAPI = (loginEmail, loginPassword) => {
   );
 };
 
-export const localSignupAPI = (email, password, cPassword, firstName, lastName) => {
+export const localSignupAPI = (
+  email,
+  password,
+  cPassword,
+  firstName,
+  lastName,
+  userAvatar
+) => {
   return API.post('/auth/signuplocal', {
     email: email,
     password: password,
     cPassword: cPassword,
     fullName: firstName + ' ' + lastName,
+    profileImageUrl: userAvatar,
   });
 };
 
