@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getToursByTagThunk } from '../redux/features/tourSlice';
 import SpinnerLoader from '../components/Spinner';
 import '../sass/pages/TaggedTours.scss';
 import Card from '../components/Card';
+import RelatedTourCard from '../components/RelatedTourCard';
 const TaggedTours = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { taggedTours, loading } = useSelector((state) => state.tour);
 
@@ -17,6 +17,7 @@ const TaggedTours = () => {
     if (tag) {
       dispatch(getToursByTagThunk(tag));
     }
+    // eslint-disable-next-line
   }, [tag]);
 
   return loading ? (
@@ -34,7 +35,7 @@ const TaggedTours = () => {
         ) : (
           <div className="taggedTours-container-grid">
             {taggedTours &&
-              taggedTours.map((tour, index) => <Card key={index} {...tour} />)}
+              taggedTours.map((tour, index) => <RelatedTourCard key={index} {...tour} />)}
           </div>
         )}
       </div>

@@ -160,6 +160,22 @@ section.tourDetailsSection {
           }
         }
       }
+
+      .likesCount {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-size: 0.84rem;
+        background-color: $white-color;
+        @include transition;
+
+        &:hover {
+          background-color: $skyBlue-color;
+          color: $white-color;
+        }
+      }
     }
 
     .tourDetails-textBody {

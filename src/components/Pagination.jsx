@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import '../sass/components/Pagination.scss';
 
 const Pagination = ({ currentPage, setCurrentPageValue, numberOfPages, dispatch }) => {

@@ -43,14 +43,12 @@ export const getAllToursThunk = (page) => async (dispatch, getState) => {
     if (response.data.status === 'success') {
       console.log('All Tours: ', response.data);
       dispatch(setLoadingValue(false));
-      // dispatch(setAllToursValue(response.data.allTours));
       dispatch(setAllToursValue(response.data.paginatedTours));
       dispatch(setNumberOfPagesValue(response.data.numberOfPages));
       dispatch(setCurrentPageValue(response.data.currentPage));
     }
   } catch (error) {
     console.log(error);
-    toast.error(error.message);
     dispatch(setLoadingValue(false));
   }
 };

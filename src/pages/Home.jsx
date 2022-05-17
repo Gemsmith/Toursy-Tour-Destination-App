@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
 import { getAllToursThunk, setCurrentPageValue } from '../redux/features/tourSlice';
 import SpinnerLoader from '../components/Spinner';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../sass/pages/Home.scss';
 import Pagination from '../components/Pagination';
 
@@ -28,6 +28,7 @@ const Home = () => {
   useEffect(() => {
     navigate(`/tour?page=${currentPage}`);
     dispatch(getAllToursThunk(currentPage));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   return loading ? (
@@ -46,7 +47,9 @@ const Home = () => {
           </div>
         )}
       </div>
-      <Pagination {...{ currentPage, setCurrentPageValue, numberOfPages, dispatch }} />
+      {allTours?.length > 0 && (
+        <Pagination {...{ currentPage, setCurrentPageValue, numberOfPages, dispatch }} />
+      )}
     </section>
   );
 };

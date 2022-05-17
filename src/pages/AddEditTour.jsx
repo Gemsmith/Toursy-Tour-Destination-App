@@ -1,6 +1,6 @@
 import '../sass/pages/AddEditTour.scss';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import addIcon from '../assets/svg/add-icon.svg';
 import removeIcon from '../assets/svg/remove-icon.svg';
@@ -9,11 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createNewTourThunk, updateTourThunk } from '../redux/features/tourSlice';
 
 const AddEditTour = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { loggedInUser } = useSelector((state) => state.user);
-  const { loading, usersTours } = useSelector((state) => state.tour);
+  const { usersTours } = useSelector((state) => state.tour);
 
   // Component States
   const [fileData, setFileData] = useState(null);
@@ -32,6 +31,7 @@ const AddEditTour = () => {
     if (editTourId) {
       const editTourObj = usersTours.find((tour) => tour._id === editTourId);
       // "editTourObj" contains many other fields, so we need only the properties that will make up the fields we need to re-fill in the form. NOTE: We won't need to destructure image, bcoz user will either be uploading a new image or keep the existing one.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       editTourFormDataObj = {
         title: editTourObj?.title,
         description: editTourObj?.description,
@@ -39,6 +39,7 @@ const AddEditTour = () => {
       };
     }
     handleFormReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editTourId]);
 
   const handleFormReset = () => {
@@ -78,8 +79,11 @@ const AddEditTour = () => {
   }, []);
 
   const onSubmit = (data) => {
-    // Taking these out, we need to create new object with more properties than just these 3.
-    const { title, description, tags } = data;
+    // In any case of creating new or updating. {data} will be needed only. Because when we edit, form will be pre-filled by
+    // editTourFormDataObj's data. And then when we change/don't change some data, react-hook-form will attach all the filled fiels
+    // to the data object, to which we'll add a little bit more data and then send to server to add or update.
+    // Taking these out, we need to create new object with more properties than just these.
+    const { title, description } = data;
     let tourData;
     // Here "_id" is the mongoDB "_id" which is of type mongoose.ObjectID.
     if (title && description) {

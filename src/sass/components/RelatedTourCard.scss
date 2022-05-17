@@ -94,7 +94,24 @@ $card-border-radius: 0.5rem;
     @include transition;
 
     @media screen and (max-width: 598px) {
-      padding: 0 0 0.5rem 1rem;
+      padding: 0 1rem 0.5rem 1rem;
+    }
+
+    .tags {
+      font-size: 0.84rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: scroll;
+      @include no-scrollbar-chrome;
+      @include no-scrollbar-others;
+
+      a {
+        background-color: #fff;
+        border-radius: 5rem;
+        padding: 0rem 0.5rem;
+        color: $darkPink-color;
+        margin-right: 0.3rem;
+      }
     }
 
     &:hover {
@@ -106,36 +123,17 @@ $card-border-radius: 0.5rem;
     a {
       text-decoration: none;
       color: $darkPink-color;
-      font-size: 0.87rem;
+      font-size: 0.75rem;
     }
 
     .title {
       @include transition;
       color: $white-color;
       font-weight: 500;
-      font-size: 1rem;
-      margin-bottom: 0.1rem;
+      font-size: 0.9rem;
+      margin-top: 0.12rem;
+      padding: 0rem 0 0.3rem 0;
     }
-
-    .tags {
-      font-size: 0.84rem;
-      font-weight: 600;
-
-      a {
-        color: $skyBlue-color;
-      }
-    }
-    // .description {
-    //   font-size: 0.87rem;
-    //   color: $gray-color;
-    //   margin-bottom: 1rem;
-    // }
-
-    // .read-more-text {
-    //   text-decoration: none;
-    //   font-size: 0.9rem;
-    //   color: $skyBlue-color;
-    // }
   }
 }
 

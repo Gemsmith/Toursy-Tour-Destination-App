@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getRelatedToursThunk, getTourThunk } from '../redux/features/tourSlice';
@@ -6,8 +6,8 @@ import { formattedDate } from '../utils/dateFormatter';
 import '../sass/pages/TourDetails.scss';
 import cameraIcon from '../assets/svg/camera-icon.svg';
 import { getUserByIdThunk } from '../redux/features/userSlice';
-import Card from '../components/Card';
 import RelatedTourCard from '../components/RelatedTourCard';
+import DisqusThread from '../components/DisqusThread';
 
 const TourDetails = () => {
   const dispatch = useDispatch();
@@ -18,30 +18,21 @@ const TourDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { relatedTours } = useSelector((state) => state.tour);
 
-  let _id,
-    title,
+  let title,
     description,
     tags,
     image,
     creatorName,
     creatorId,
-    likeCount,
+    likes,
     createdAt,
     fName,
     lName;
 
   if (tour) {
-    ({
-      _id,
-      title,
-      description,
-      tags,
-      image,
-      creatorName,
-      creatorId,
-      likeCount,
-      createdAt,
-    } = tour);
+    // Removed bcoz of unused but "_id" is also available from "tour" to be destructured if needed
+    ({ title, description, tags, image, creatorName, creatorId, likes, createdAt } =
+      tour);
 
     fName = creatorName?.split(' ')[0];
     lName = creatorName?.split(' ')[1];
@@ -57,11 +48,13 @@ const TourDetails = () => {
         dispatch(getUserByIdThunk(tour?.creatorId));
       }
     }
+    // eslint-disable-next-line
   }, [tour]);
 
   // Related tours functionality
   useEffect(() => {
     tags && dispatch(getRelatedToursThunk(tags));
+    // eslint-disable-next-line
   }, [tags]);
 
   // Load the current Tour
@@ -72,6 +65,7 @@ const TourDetails = () => {
       // Which we will then bring in to this component via useSelector.
       dispatch(getTourThunk(tourId));
     }
+    // eslint-disable-next-line
   }, [tourId]);
 
   // We also want to get the creator's profile then.
@@ -120,6 +114,11 @@ const TourDetails = () => {
                 </div>
               </Link>
 
+              <p className="likesCount">
+                <b> {likes?.length} </b>
+                Likes
+              </p>
+
               {/* <div className="image__container-likesContainer"> */}
               {/* <img src={heartIconFilled} className="image__container-likeBtn" alt="" /> */}
               {/* <p className="likeCount">{likeCount}</p> */}
@@ -164,6 +163,9 @@ const TourDetails = () => {
           </div>
         </>
       )}
+
+      {/* Comments - DISQUS */}
+      <DisqusThread id={tourId} title={title} path={`/tour/${tourId}`} />
     </section>
   );
 };

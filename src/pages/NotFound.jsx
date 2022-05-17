@@ -1,4 +1,3 @@
-import React from 'react';
 import '../sass/pages/NotFound.scss';
 import { Link } from 'react-router-dom';
 

@@ -13,6 +13,14 @@
     border-radius: 5px;
     padding: 1rem 1.5rem;
     font-size: 0.84rem;
+    @media screen and (max-width: 480px) {
+      font-size: 0.7rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    gap: 0.3rem;
   }
 
   button {
@@ -45,6 +53,12 @@
     &:active {
       box-shadow: 0 4px darken($cutePink-color, 5%);
       transform: translateY(1.5px);
+    }
+
+    @media screen and (max-width: 320px) {
+      font-size: 0.7rem;
+      height: auto;
+      padding: 0.6rem 1.2rem;
     }
   }
 

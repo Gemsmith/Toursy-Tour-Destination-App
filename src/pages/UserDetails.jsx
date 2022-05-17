@@ -15,6 +15,7 @@ const UserDetails = () => {
     console.log('inside userDetails');
     dispatch(getUserByIdThunk(userId));
     return;
+    // eslint-disable-next-line
   }, [userId]);
 
   if (currentUser && userId !== currentUser._id) {

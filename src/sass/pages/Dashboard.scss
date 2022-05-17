@@ -2,7 +2,9 @@ section.dashboard {
   // background-image: url('/assets/images/greece.jpg');
 
   .dashboard-tours__container {
-    p {
+    .dashboard-tours__container-no-tours-found {
+      margin-top: 2rem;
+      text-align: center;
     }
 
     .dashboard-tours__container-grid {

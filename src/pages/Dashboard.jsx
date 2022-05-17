@@ -34,7 +34,7 @@ const Dashboard = () => {
     <section className="dashboard">
       <div className="dashboard-tours__container">
         {usersTours?.length === 0 ? (
-          <p>
+          <p className="dashboard-tours__container-no-tours-found">
             No tours found! Click <Link to="/addtour">here</Link> to start creating
             memories!
           </p>

@@ -2,6 +2,11 @@ section.taggedTours {
   // background-image: url('/assets/images/greece.jpg');
   .taggedTours-heading {
     margin-bottom: 1rem;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.2rem;
+      // margin-bottom: 0.5rem;
+    }
   }
 
   .taggedTours-container {

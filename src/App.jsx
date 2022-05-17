@@ -13,7 +13,7 @@ import AddEditTour from './pages/AddEditTour';
 import Dashboard from './pages/Dashboard';
 import TourDetails from './pages/TourDetails';
 import UserDetails from './pages/UserDetails';
-import { getLoggedInUserThunk } from './redux/features/userSlice';
+import { getLoggedInUserThunk, setLoggedInUserValue } from './redux/features/userSlice';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import NotFound from './pages/NotFound';
 import SearchResultsPage from './pages/SearchResultsPage';
@@ -44,6 +44,12 @@ const App = () => {
         toast('Session Expired - Logging Out');
         dispatch(logoutThunk());
       }
+
+      // Since persist is giving very slow load times and the images are getting too large to handle for it,
+      // we'll stop redux-persist and just bring the user in from localStorage.
+      // If user is indeed at the localStorage and their session is not expired yet,
+      // then we'll set our loggedIn user in the store, with this user at localstorage
+      dispatch(setLoggedInUserValue(isUserAtLocalStorage));
     }
 
     // eslint-disable-next-line

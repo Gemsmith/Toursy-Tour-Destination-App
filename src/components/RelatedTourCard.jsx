@@ -34,8 +34,8 @@ const RelatedTourCard = ({
         {/* <p className="likeCount">{likeCount}</p> */}
       </div>
 
-      <div className="title-and-tags no-scrollbar">
-        <p className="tags">
+      <div className="title-and-tags ">
+        <p className="tags ">
           {tags.map((tag, index) => {
             return (
               <Link key={index} to={`/tour/tag/${tag} `}>

@@ -13,6 +13,7 @@
 9. Implement Page Transitions - https://www.youtube.com/watch?v=FdrEjwymzdY
 10. Implement filtering and sorting at the search results page
 11. On tourDetails page, when there are no related tours, add the other tours as "Some other tours to browse"
+12. Implement loader anmiation on all buttons not just Login.jsx
 
 ### TODO : Likes, Search, Pagination, Recommended Sites, Tags Clickable, Comments
 

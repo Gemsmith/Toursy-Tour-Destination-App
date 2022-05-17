@@ -17,7 +17,7 @@ const reducers = combineReducers({
 // NOTE: we needed to get it from the state.auth, this is where this key comes in use.
 // export default configureStore({ reducer: { auth: persistedReducer } });
 
-export const storeNoPersist = configureStore({
+export const store = configureStore({
   // reducer: { auth: persistedReducer },
   reducer: reducers, // https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
 });

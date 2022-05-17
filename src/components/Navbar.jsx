@@ -1,17 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { setLoggedInUserValue } from '../redux/features/userSlice';
-import {
-  getToursBySearchThunk,
-  setAllToursValue,
-  setCurrentPageValue,
-  setTourValue,
-} from '../redux/features/tourSlice';
+import { getToursBySearchThunk, setCurrentPageValue } from '../redux/features/tourSlice';
 import '../sass/components/Navbar.scss';
 import searchIcon from '../assets/svg/search-icon.svg';
+import toursyLogo from '../assets/images/toursy-logo.png';
 import { toast } from 'react-toastify';
-import { formattedDate } from '../utils/dateFormatter';
 import { logoutThunk } from '../redux/features/authSlice';
 
 const Navbar = () => {
@@ -41,6 +35,7 @@ const Navbar = () => {
     if (searchTerm) {
       dispatch(getToursBySearchThunk(searchTerm));
       navigate(`/tour/search?searchQuery=${searchTerm}`);
+      setSearchTerm('');
     } else {
       toast('Please enter a search term');
     }
@@ -79,14 +74,15 @@ const Navbar = () => {
       <div className="navbar__desktop">
         {/* Site Logo */}
         <Link to="/" className="navbar__logo-text">
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="48"
             height="48"
             viewBox="0 0 24 24"
           >
             <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-          </svg>
+          </svg> */}
+          <img src={toursyLogo} alt="toursy-logo" className="" />
         </Link>
 
         {/* Nav Links + User Avatar */}
@@ -157,7 +153,7 @@ const Navbar = () => {
                     />
 
                     {avatarMenuOpen && (
-                      <ul className="avatarMenu avatarMenuDesktop">
+                      <ul className="avatarMenuDesktop">
                         <li>
                           <Link to={`/user/${loggedInUser._id}`}>
                             <b>{loggedInUser?.name}</b>
@@ -170,7 +166,7 @@ const Navbar = () => {
                           </Link>
                         </li>
 
-                        <li>
+                        <li className="avatarMenuDesktop-button">
                           <button onClick={() => logout()} className="navBtn ">
                             Logout
                           </button>
@@ -211,7 +207,6 @@ const Navbar = () => {
       {menuOpen && (
         <nav className="navbar__mobile" ref={hamburgerMenuElRef}>
           {/* Mobile View - Nav Links */}
-          {/* <div className="navbar__mobile-navLinks">{navLinks}</div> */}
           <div className="navbar__mobile-navLinks">
             <Link className="navLinks clr-black" to="/">
               Home
@@ -252,15 +247,17 @@ const Navbar = () => {
                 </form>
 
                 {/* Mobile View - User Avatar */}
-                <ul className="avatarMenu avatarMenuMobile">
-                  <li>
-                    <button onClick={() => logout()} className="navBtn ">
-                      Logout
-                    </button>
-                  </li>
-
-                  <div className="avatarMenuMobile__top">
-                    <div className="avatarMenuMobile__top-text">
+                <ul className="avatarMenuMobile">
+                  <div className="avatarMenuMobile-image-and-text">
+                    <li>
+                      <img
+                        className=""
+                        src={loggedInUser?.profileImageUrl}
+                        referrerPolicy="no-referrer"
+                        alt=""
+                      />
+                    </li>
+                    <div className="avatarMenuMobile-text">
                       <li>
                         <Link to={`/user/${loggedInUser.id}`}>
                           <b>{loggedInUser?.name}</b>
@@ -271,16 +268,13 @@ const Navbar = () => {
                         <Link to={`/user/${loggedInUser.id}`}>{loggedInUser?.email}</Link>
                       </li>
                     </div>
-
-                    <li>
-                      <img
-                        className=""
-                        src={loggedInUser?.profileImageUrl}
-                        referrerPolicy="no-referrer"
-                        alt=""
-                      />
-                    </li>
                   </div>
+
+                  <li className="avatarMenuMobile-button">
+                    <button onClick={() => logout()} className="navBtn">
+                      Logout
+                    </button>
+                  </li>
                 </ul>
               </>
             )}

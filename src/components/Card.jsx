@@ -3,14 +3,9 @@ import '../sass/components/Card.scss';
 import { truncate } from '../utils/truncateString';
 import { formattedDate } from '../utils/dateFormatter';
 import { useDispatch, useSelector } from 'react-redux';
-import heartIcon from '../assets/svg/heart.svg';
 import { likeTourThunk } from '../redux/features/tourSlice';
-import { toast } from 'react-toastify';
-import ReactTooltip from 'react-tooltip';
-//
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
-//
 
 const Card = ({
   _id,
@@ -30,25 +25,26 @@ const Card = ({
     dispatch(likeTourThunk(_id));
   };
 
-  console.log('likes', likes.length);
   const RenderLikeButton = () => {
     let isLiked;
 
     if (likes && likes?.length > 0) {
       isLiked = likes.find((like) => like === loggedInUser?._id);
     }
+    console.log(title, likes, isLiked);
     return (
       <>
-        <Tippy content={likes?.length + ' ' + 'Likes'}>
+        <Tippy content={`${likes?.length} Likes`}>
           <p>{likes?.length}</p>
         </Tippy>
-
-        <Tippy content={'You need to login to like a tour'}>
-          <div
-            className="image__container-likesContainer-SVG"
-            data-tip
-            data-for="login-needed-tooltip"
-          >
+        <Tippy
+          content={
+            !loggedInUser
+              ? 'You need to login to like a tour'
+              : 'Click to add or remove a like'
+          }
+        >
+          <div className="image__container-likesContainer-SVG">
             {isLiked ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
