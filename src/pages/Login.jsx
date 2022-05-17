@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import validate from '../utils/inputValidation.util';
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import '../sass/pages/Login.scss';
 import fbLogo from '../assets/svg/fb-logo.svg';
@@ -10,8 +7,10 @@ import { localLoginThunk } from '../redux/features/authSlice';
 import SpinnerLoader from '../components/SpinnerLoader';
 import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
 import { useForm } from 'react-hook-form';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 
-const Login3 = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
@@ -61,7 +60,7 @@ const Login3 = () => {
                   {...register('email', {
                     required: 'Required',
                     pattern:
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, // eslint-disable-line
                   })}
                 />
                 {errors?.email && (
@@ -107,10 +106,14 @@ const Login3 = () => {
             {/* Social Buttons Div */}
             <div className="login__forms-right-btn-container">
               <button onClick={() => googleLoginSignup()} className="">
-                <div className="">
-                  <img src={googleLogo} className="" alt="google logo" />
-                  <span className="">Log in with Google</span>
-                </div>
+                <Tippy
+                  content={`Google login not working? Means GCP trial period may have ended!`}
+                >
+                  <div className="">
+                    <img src={googleLogo} className="" alt="google logo" />
+                    <span className="">Log in with Google</span>
+                  </div>
+                </Tippy>
               </button>
 
               <button onClick={() => facebookLoginSignup()} className="">
@@ -132,4 +135,4 @@ const Login3 = () => {
   );
 };
 
-export default Login3;
+export default Login;

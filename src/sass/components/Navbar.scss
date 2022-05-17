@@ -260,7 +260,7 @@
   .avatarMenuMobile-image-and-text {
     display: flex;
     flex-direction: row;
-    align-items: end;
+    align-items: flex-end;
     gap: 0.6rem;
 
     .avatarMenuMobile-text {

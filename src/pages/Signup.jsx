@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import validate from '../utils/inputValidation.util';
 import '../sass/pages/Signup.scss';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import fbLogo from '../assets/svg/fb-logo.svg';
 import googleLogo from '../assets/svg/google-logo.svg';
 import SpinnerLoader from '../components/SpinnerLoader';
@@ -11,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { localSignupThunk } from '../redux/features/authSlice';
 import { useForm } from 'react-hook-form';
 import FileBase64 from 'react-file-base64';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -153,7 +153,7 @@ const Signup = () => {
                   {...register('email', {
                     required: 'Required',
                     pattern:
-                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, //eslint-disable-line
                   })}
                 />
                 {errors?.email && (
@@ -192,10 +192,14 @@ const Signup = () => {
             {/* Social Buttons Div */}
             <div className="signup__forms-social-btn-container">
               <button onClick={() => googleLoginSignup()} className="">
-                <div className="">
-                  <img src={googleLogo} className="" alt="google logo" />
-                  <span className="">Sign up with Google</span>
-                </div>
+                <Tippy
+                  content={`Google signup not working? Means GCP trial period may have ended!`}
+                >
+                  <div className="">
+                    <img src={googleLogo} className="" alt="google logo" />
+                    <span className="">Sign up with Google</span>
+                  </div>
+                </Tippy>
               </button>
 
               <button onClick={() => facebookLoginSignup()} className="">
