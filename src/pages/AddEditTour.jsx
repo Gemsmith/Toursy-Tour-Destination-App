@@ -7,6 +7,7 @@ import removeIcon from '../assets/svg/remove-icon.svg';
 import FileBase64 from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { createNewTourThunk, updateTourThunk } from '../redux/features/tourSlice';
+import { motion } from 'framer-motion';
 
 const AddEditTour = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,6 @@ const AddEditTour = () => {
     if (editTourId) {
       const editTourObj = usersTours.find((tour) => tour._id === editTourId);
       // "editTourObj" contains many other fields, so we need only the properties that will make up the fields we need to re-fill in the form. NOTE: We won't need to destructure image, bcoz user will either be uploading a new image or keep the existing one.
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       editTourFormDataObj = {
         title: editTourObj?.title,
         description: editTourObj?.description,
@@ -107,13 +107,32 @@ const AddEditTour = () => {
 
   return (
     <section className="add__edit__tour">
-      <h1 className="add__edit__tour-heading">
+      <motion.h1
+        whileInView={{
+          opacity: [0, 1],
+          y: [50, 0],
+        }}
+        className="add__edit__tour-heading"
+      >
         {editTourId ? 'Update your tour' : 'Add your newest tour'}
-      </h1>
+      </motion.h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <motion.form
+        whileInView={{
+          opacity: [0, 1],
+          y: [50, 0],
+        }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* Tour Title  */}
-        <div className="add__edit__tour-title">
+        <motion.div
+          whileInView={{
+            opacity: [0, 1],
+            y: [50, 0],
+            transition: { delay: 0.1 * 1 },
+          }}
+          className="add__edit__tour-title"
+        >
           <label className="" htmlFor="title">
             Title
             {/* <span className=""> *</span> */}
@@ -131,10 +150,17 @@ const AddEditTour = () => {
           {errors?.title && (
             <small className="input-warning">{errors.title.message}</small>
           )}
-        </div>
+        </motion.div>
 
         {/* Tour Description  */}
-        <div className="add__edit__tour-description">
+        <motion.div
+          whileInView={{
+            opacity: [0, 1],
+            y: [50, 0],
+            transition: { delay: 0.1 * 2 },
+          }}
+          className="add__edit__tour-description"
+        >
           <label className="" htmlFor="description">
             Description
             {/* <span className=""> *</span> */}
@@ -155,10 +181,17 @@ const AddEditTour = () => {
           {errors?.description && (
             <small className="input-warning">{errors.description.message}</small>
           )}
-        </div>
+        </motion.div>
 
         {/* Tour Tags  */}
-        <div className="add__edit__tour-tags">
+        <motion.div
+          whileInView={{
+            opacity: [0, 1],
+            y: [50, 0],
+            transition: { delay: 0.1 * 3 },
+          }}
+          className="add__edit__tour-tags"
+        >
           <div className="tags__container-labelRow">
             <label className="" htmlFor="tags">
               Tags
@@ -209,7 +242,7 @@ const AddEditTour = () => {
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* Image Upload */}
         {/* Had quite a bit of difficulty getting this working, found out it is a isuue with file uploads with react-hook-form. So could use the example from below:
@@ -217,7 +250,14 @@ const AddEditTour = () => {
         https://codesandbox.io/s/long-sun-nsfbk?file=/src/App.js:950-993
            */}
         {/* But for now I am just creating a FileBase tag that will add the base64 to a state variable, and I'll just attach that to the form data created by react-hook-form before uploading to server */}
-        <div className="add__edit__tour-imageUpload">
+        <motion.div
+          whileInView={{
+            opacity: [0, 1],
+            y: [50, 0],
+            transition: { delay: 0.1 * 4 },
+          }}
+          className="add__edit__tour-imageUpload"
+        >
           <label htmlFor="file" className="">
             Image
           </label>
@@ -230,37 +270,16 @@ const AddEditTour = () => {
               setFileData(base64);
             }}
           />
+        </motion.div>
 
-          {/* <FileBase64
-            id="file"
-            className="file-input"
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) => {
-              setTourData({ ...tourData, imageBase64: base64 });
-            }}
-            {...register('file')}
-          /> */}
-
-          {/* <Controller
-            name="file"
-            control={control}
-            render={({ field }) => (
-              <FileBase64
-                id="file"
-                className="file-input"
-                type="file"
-                multiple={false}
-                onDone={({ base64 }) => {
-                  setTourData({ ...tourData, imageBase64: base64 });
-                }}
-                {...register('file')}
-              />
-            )}
-          /> */}
-        </div>
-
-        <div className="add__edit__tour-form-buttons">
+        <motion.div
+          whileInView={{
+            opacity: [0, 1],
+            y: [50, 0],
+            transition: { delay: 0.1 * 5 },
+          }}
+          className="add__edit__tour-form-buttons"
+        >
           {/* Save Button */}
           <button type="submit" className="saveBtn">
             {editTourId ? 'Update Tour' : 'Create Tour'}
@@ -270,8 +289,8 @@ const AddEditTour = () => {
           <button type="clear" className="clearBtn" onClick={handleFormReset}>
             Clear
           </button>
-        </div>
-      </form>
+        </motion.div>
+      </motion.form>
     </section>
   );
 };

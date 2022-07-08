@@ -7,6 +7,7 @@ import '../sass/pages/Dashboard.scss';
 import Card from '../components/Card';
 import editIcon from '../assets/svg/edit-icon.svg';
 import trashIcon from '../assets/svg/trash-icon.svg';
+import { motion } from 'framer-motion';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,16 @@ const Dashboard = () => {
           <div className="dashboard-tours__container-grid">
             {usersTours &&
               usersTours.map((tour, index) => (
-                <div key={index} className="card__wrapper">
+                <motion.div
+                  whileInView={{
+                    scale: [0.9, 1],
+                    opacity: [0, 1],
+                    y: [100, 0],
+                    transition: { delay: 0.1 * index },
+                  }}
+                  key={index}
+                  className="card__wrapper"
+                >
                   <Card key={index} {...tour} />
 
                   <div className="card__wrapper-buttons__container">
@@ -53,7 +63,7 @@ const Dashboard = () => {
                       <img src={trashIcon} alt="" className="svg-icons" />
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
           </div>
         )}

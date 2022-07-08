@@ -4,8 +4,9 @@ import { Link, useParams } from 'react-router-dom';
 import { getToursByTagThunk } from '../redux/features/tourSlice';
 import SpinnerLoader from '../components/Spinner';
 import '../sass/pages/TaggedTours.scss';
-import Card from '../components/Card';
 import RelatedTourCard from '../components/RelatedTourCard';
+import { motion } from 'framer-motion';
+
 const TaggedTours = () => {
   const dispatch = useDispatch();
 
@@ -35,7 +36,20 @@ const TaggedTours = () => {
         ) : (
           <div className="taggedTours-container-grid">
             {taggedTours &&
-              taggedTours.map((tour, index) => <RelatedTourCard key={index} {...tour} />)}
+              taggedTours.map((tour, index) => (
+                <motion.div
+                  whileInView={{
+                    scale: [0.9, 1],
+                    opacity: [0, 1],
+                    y: [100, 0],
+                    transition: { delay: 0.1 * index },
+                  }}
+                  key={index}
+                  className="card-container"
+                >
+                  <RelatedTourCard {...tour} />
+                </motion.div>
+              ))}
           </div>
         )}
       </div>

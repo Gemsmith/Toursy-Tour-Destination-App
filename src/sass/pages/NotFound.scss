@@ -76,6 +76,11 @@ section.notfound {
         box-shadow: 0 4px darken($cutePink-color, 5%);
         transform: translateY(1.5px);
       }
+
+      a {
+        color: white;
+        text-decoration: none;
+      }
     }
 
     .loginBtn {
@@ -96,6 +101,11 @@ section.notfound {
       button {
         color: $darkBlue-color;
         font-weight: bold;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
       }
     }
   }

@@ -11,7 +11,6 @@ export const createNewTourThunk = (tourData) => async (dispatch, getState) => {
 
     if (response.data.status === 'success') {
       dispatch(setLoadingValue(false));
-      console.log('Created Tour: ', response.data.newTour);
 
       // Updating FE's "allTours" without calling BE
       const { allTours } = getState().tour;
@@ -37,9 +36,7 @@ export const getAllToursThunk = (page) => async (dispatch, getState) => {
 
   try {
     const response = await api.getAllToursAPI(page);
-    console.log(response.data);
     if (response.data.status === 'success') {
-      console.log('All Tours: ', response.data);
       dispatch(setLoadingValue(false));
       dispatch(setAllToursValue(response.data.paginatedTours));
       dispatch(setNumberOfPagesValue(response.data.numberOfPages));
@@ -59,7 +56,6 @@ export const getTourThunk = (tourId) => async (dispatch, getState) => {
     const response = await api.getTourAPI(tourId);
 
     if (response.data.status === 'success') {
-      console.log('Clicked Tour: ', response.data);
       dispatch(setLoadingValue(false));
       dispatch(setTourValue(response.data.tour));
     }
@@ -78,7 +74,6 @@ export const getUsersToursThunk = (userId) => async (dispatch, getState) => {
     const response = await api.getUsersToursAPI(userId);
 
     if (response.data.status === 'success') {
-      console.log("Users' Tours (Dashboard): ", response.data);
       dispatch(setLoadingValue(false));
       dispatch(setUsersToursValue(response.data.usersTours));
     }
@@ -97,7 +92,6 @@ export const updateTourThunk =
     try {
       const response = await api.updateTourAPI(tourId, updatedTourData);
       if (response.data.status === 'success') {
-        console.log('Updated Tour: ', response.data);
         dispatch(setLoadingValue(false));
 
         // Updating FE's "allTours" without calling BE
@@ -131,7 +125,6 @@ export const deleteTourThunk = (tourId) => async (dispatch, getState) => {
   try {
     const response = await api.deleteTourAPI(tourId);
     if (response.data.status === 'success') {
-      console.log('Deleted Tour: ', response.data);
       dispatch(setLoadingValue(false));
 
       // Updating FE's "allTours" without calling BE
@@ -157,7 +150,6 @@ export const getToursBySearchThunk = (searchQuery) => async (dispatch, getState)
 
   try {
     const response = await api.getToursBySearchAPI(searchQuery);
-    console.log('Searched Tours: ', response.data);
     dispatch(setSearchedToursValue(response.data.searchedTours));
     dispatch(setLoadingValue(false));
   } catch (error) {
@@ -172,7 +164,6 @@ export const getToursByTagThunk = (tag) => async (dispatch, getState) => {
 
   try {
     const response = await api.getToursByTagAPI(tag);
-    console.log('Tagged Tours: ', response.data);
     dispatch(setTaggedToursValue(response.data.taggedTours));
     dispatch(setLoadingValue(false));
   } catch (error) {
@@ -187,7 +178,6 @@ export const getRelatedToursThunk = (tags) => async (dispatch, getState) => {
 
   try {
     const response = await api.getRelatedToursAPI(tags);
-    console.log('Related Tours: ', response.data);
     dispatch(setRelatedToursValue(response.data.relatedTours));
     dispatch(setLoadingValue(false));
   } catch (error) {
@@ -204,7 +194,6 @@ export const likeTourThunk = (tourId) => async (dispatch, getState) => {
 
   try {
     const response = await api.likeTourAPI(tourId);
-    console.log('Tour updated with Like:', response.data);
 
     // Updating FE's "allTours" without calling BE
     const { allTours } = getState().tour;

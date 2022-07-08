@@ -30,8 +30,6 @@ const Navbar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Do something with searchTerm
-    console.log(searchTerm);
     if (searchTerm) {
       dispatch(getToursBySearchThunk(searchTerm));
       navigate(`/tour/search?searchQuery=${searchTerm}`);
@@ -48,7 +46,6 @@ const Navbar = () => {
         !avatarMenuElRef.current?.contains(event.target) &&
         !avatarBtnElRef.current?.contains(event.target)
       ) {
-        // setAvatarMenuOpen(false);
         setAvatarMenuOpen(false);
       }
 
@@ -97,7 +94,18 @@ const Navbar = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button type="submit" className="search-btn">
-              <img src={searchIcon} alt="" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="dodgerBlue"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </button>
           </form>
 
@@ -147,7 +155,7 @@ const Navbar = () => {
                   >
                     <img
                       className=""
-                      src={loggedInUser?.profileImageUrl}
+                      src={loggedInUser?.profileImage}
                       referrerPolicy="no-referrer"
                       alt=""
                     />
@@ -270,7 +278,7 @@ const Navbar = () => {
                       <Link to={`/user/${loggedInUser._id}`}>
                         <img
                           className=""
-                          src={loggedInUser?.profileImageUrl}
+                          src={loggedInUser?.profileImage}
                           referrerPolicy="no-referrer"
                           alt=""
                         />

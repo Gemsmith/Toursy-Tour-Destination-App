@@ -8,19 +8,16 @@ $card-border-radius: 0.5rem;
   // width: 24rem;
   border-radius: $card-border-radius;
   overflow: hidden;
-  box-shadow: 0 1rem 5rem #cdd9ff;
+  box-shadow: 0 0.1rem 1rem #cdd9ff;
 
   &:hover {
+    box-shadow: 0 0.5rem 2rem #cdd9ff;
   }
 
   .card__container-imageContainer {
     position: relative;
     height: 15rem;
     width: auto;
-    // https://www.codegrepper.com/code-examples/css/sass+hover+change+other+element
-    // .image__container-heroImg:hover ~ .creatorName {
-    //   opacity: 1;
-    // }
 
     .image__container-heroImg {
       filter: brightness(1);
@@ -35,36 +32,42 @@ $card-border-radius: 0.5rem;
       }
     }
 
-    .image__container-creatorName {
+    .imageContainer__creatorInfo {
       position: absolute;
-      opacity: 1;
-      top: 1.2rem;
+      top: 1rem;
       left: 1rem;
-      font-size: 0.8rem;
-      color: $white-color;
-      font-weight: 500;
-      cursor: pointer;
-      @include transition;
-
-      // &:hover {
-      //   opacity: 1;
-      // }
-    }
-
-    .image__container-createdAt {
-      position: absolute;
-      opacity: 0.5;
-      top: 2.2rem;
-      left: 1rem;
-      font-size: 0.8rem;
-      color: $white-color;
-      font-weight: 500;
-      cursor: pointer;
-      @include transition;
+      border-radius: 0.24rem;
+      padding: 0.3rem 0.5rem;
+      transition: all 0.3s ease-in-out;
 
       &:hover {
-        color: $black-color;
-        opacity: 1;
+        background-color: $darkPink-color;
+        opacity: 0.75;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .creatorName {
+        font-size: 0.8rem;
+        color: $white-color;
+        font-weight: 500;
+        cursor: pointer;
+        @include transition;
+      }
+
+      .createdAt {
+        opacity: 0.5;
+        font-size: 0.8rem;
+        color: $white-color;
+        font-weight: 500;
+        cursor: pointer;
+        @include transition;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 

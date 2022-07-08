@@ -20,7 +20,6 @@ section.tourDetailsSection {
         height: 100%;
         object-fit: cover;
         display: block;
-        @include transition;
       }
 
       .createdAt {
@@ -252,6 +251,36 @@ section.tourDetailsSection {
 
       @media screen and (max-width: 590px) {
         grid-template-columns: repeat(auto-fit, minmax(min(10px, 100%), 100%));
+      }
+    }
+  }
+
+  .tourDetails__comments {
+    .load-comments-btn {
+      margin: 0 auto 2rem auto;
+      border-radius: 5px;
+      padding: 0.5rem 0.75rem;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      text-align: center;
+      background-color: $cutePink-color;
+      box-shadow: 0 6px darken($cutePink-color, 10%);
+      border: none;
+      height: 3rem;
+      width: 60%;
+      display: flex;
+      justify-content: center;
+      // align-items: center;
+      color: white;
+      transition: all 0.1s ease;
+
+      &:hover {
+        background-color: $cutePink-color;
+      }
+
+      &:active {
+        box-shadow: 0 4px darken($cutePink-color, 5%);
+        transform: translateY(1.5px);
       }
     }
   }

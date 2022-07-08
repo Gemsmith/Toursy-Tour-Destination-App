@@ -31,7 +31,6 @@ const Card = ({
     if (likes && likes?.length > 0) {
       isLiked = likes.find((like) => like === loggedInUser?._id);
     }
-    console.log(title, likes, isLiked);
     return (
       <>
         <Tippy content={`${likes?.length} Likes`}>
@@ -100,14 +99,21 @@ const Card = ({
       {/* <p className="">{creatorId}</p> */}
       <div className="card__container-imageContainer">
         <Link to={`/tour/${_id}`}>
-          <img src={image} alt={title} className="image__container-heroImg" />
+          <img
+            src={image}
+            alt={title}
+            loading="lazy"
+            className="image__container-heroImg"
+          />
         </Link>
 
-        <Link to={`/user/${creatorId}`}>
-          <p className="image__container-creatorName">{creatorName}</p>
-        </Link>
+        <div className="imageContainer__creatorInfo">
+          <Link to={`/user/${creatorId}`}>
+            <p className="creatorName">{creatorName}</p>
+          </Link>
 
-        <p className="image__container-createdAt">{formattedDate(createdAt)}</p>
+          <p className="createdAt">{formattedDate(createdAt)}</p>
+        </div>
 
         <div className="image__container-likesContainer">
           <RenderLikeButton />

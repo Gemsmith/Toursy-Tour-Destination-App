@@ -9,6 +9,7 @@ import { googleLoginSignup, facebookLoginSignup } from '../redux/api';
 import { useForm } from 'react-hook-form';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,12 +42,22 @@ const Login = () => {
       <div className="login__forms-container">
         {/* Heading */}
 
-        <h1 className="">Login</h1>
+        <motion.h1
+          whileInView={{ y: [-50, 0], opacity: [0, 1] }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className=""
+        >
+          Login
+        </motion.h1>
 
         <div className="login__forms-bottom ">
           {/* Local Login Form */}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="login__forms-left">
+            <motion.div
+              whileInView={{ x: [50, 0], opacity: [0, 1] }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              className="login__forms-left"
+            >
               {/* Email Field */}
               <div className="login__forms-left-input">
                 <label className="" htmlFor="email">
@@ -98,11 +109,15 @@ const Login = () => {
               <button type="submit" disabled={loading}>
                 {loading ? <SpinnerLoader /> : 'Login'}
               </button>
-            </div>
+            </motion.div>
           </form>
 
           {/* Socials Container */}
-          <div className="login__forms-right">
+          <motion.div
+            whileInView={{ x: [-50, 0], opacity: [0, 1] }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+            className="login__forms-right"
+          >
             {/* Social Buttons Div */}
             <div className="login__forms-right-btn-container">
               <button onClick={() => googleLoginSignup()} className="">
@@ -128,7 +143,7 @@ const Login = () => {
               <span>Don't have an account? </span>
               <Link to="/signup">Sign Up</Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

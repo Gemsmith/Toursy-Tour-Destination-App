@@ -26,9 +26,9 @@ class DisqusThread extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     return (
-      this.props.id !== nextProps.id ||
-      this.props.title !== nextProps.title ||
-      this.props.path !== nextProps.path
+      this.props.id !== nextProps?.id ||
+      this.props.title !== nextProps?.title ||
+      this.props.path !== nextProps?.path
     );
   }
 

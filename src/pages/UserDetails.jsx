@@ -5,6 +5,7 @@ import SpinnerLoader from '../components/SpinnerLoader';
 import { getUserByIdThunk } from '../redux/features/userSlice';
 import '../sass/pages/UserDetails.scss';
 import { formattedDate } from '../utils/dateFormatter';
+import { motion } from 'framer-motion';
 
 const UserDetails = () => {
   const userId = useParams().id;
@@ -12,9 +13,7 @@ const UserDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log('inside userDetails');
     dispatch(getUserByIdThunk(userId));
-    return;
     // eslint-disable-next-line
   }, [userId]);
 
@@ -24,15 +23,31 @@ const UserDetails = () => {
 
   return (
     <section className="userdetails">
-      <h1 className="userdetails-heading">Personal Info</h1>
+      <motion.h1
+        whileInView={{ y: [50, 0], opacity: [0, 1] }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
+        className="userdetails-heading"
+      >
+        Personal Info
+      </motion.h1>
       {currentUser && (
         <div className="userdetails__container">
           {/* Profile Pic + Name + Date */}
           <div className="userdetails__container-image-name-date">
             {/* Profile Pic */}
-            <img className="image" src={currentUser?.profileImageUrl} alt="" />
+            <motion.img
+              whileInView={{ x: [-50, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.75, ease: 'easeInOut' }}
+              className="image"
+              src={currentUser?.profileImage}
+              alt=""
+            />
 
-            <div className="name-joinDate">
+            <motion.div
+              whileInView={{ x: [50, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.75, ease: 'easeInOut' }}
+              className="name-joinDate"
+            >
               {/* Name */}
               <span className="name">{currentUser?.name}</span>
 
@@ -55,35 +70,31 @@ const UserDetails = () => {
                   Since {formattedDate(currentUser?.createdAt)}
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Email */}
-          <div className="userdetails__container-email">
-            {/* <svg
-     className="email-icon"
-     xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 20 20"
-     fill="currentColor"
-   >
-     <path
-       fillRule="evenodd"
-       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-       clipRule="evenodd"
-     />
-   </svg> */}
+          <motion.div
+            whileInView={{ x: [50, 0], opacity: [0, 1] }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+            className="userdetails__container-email"
+          >
             <label className="email-label">Email address</label>
             <a className="email-link" href={`mailto:${currentUser?.email}`}>
               {currentUser?.email}
             </a>
-          </div>
+          </motion.div>
 
-          <div className="userdetails__container-lastVisited">
+          <motion.div
+            whileInView={{ x: [50, 0], opacity: [0, 1] }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            className="userdetails__container-lastVisited"
+          >
             <label className="lastVisited-label">Last Visit</label>
             <div className="lastVisited-text">
               {formattedDate(currentUser?.lastVisited)}
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </section>
@@ -91,14 +102,3 @@ const UserDetails = () => {
 };
 
 export default UserDetails;
-
-// id;
-// name;
-// email;
-// password;
-// profileImageUrl;
-
-// source;
-
-// createdAt;
-// lastVisited;

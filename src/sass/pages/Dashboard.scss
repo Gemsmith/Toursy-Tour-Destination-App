@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 section.dashboard {
   // background-image: url('/assets/images/greece.jpg');
 
@@ -27,9 +29,17 @@ section.dashboard {
           align-items: center;
           gap: 0.5rem;
 
-          .svg-icons {
-            height: 1.5rem;
-            width: 1.5rem;
+          a,
+          button {
+            background-color: $gray-color;
+            border-radius: 5rem;
+            padding: 0.4rem;
+
+            .svg-icons {
+              display: block;
+              height: 1.2rem;
+              width: 1.2rem;
+            }
           }
         }
       }

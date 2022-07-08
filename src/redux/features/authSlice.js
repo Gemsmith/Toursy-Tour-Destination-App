@@ -84,7 +84,7 @@ export const logoutThunk = () => async (dispatch, getState) => {
     // So we'll set all state variables to null for now.
     // Remove them from localStorage as well
     localStorage.removeItem('user');
-    localStorage.setItem('persist:tours_app', null);
+    // localStorage.setItem('persist:tours_app', null);
     // And remove the persist data from localStorage to prevent REHYDRATING the store back after logout.
     dispatch(setLoggedInUserValue(null)); // Auth Slice PURGING
     dispatch(setTourValue(null)); // Tour Slice PURGING

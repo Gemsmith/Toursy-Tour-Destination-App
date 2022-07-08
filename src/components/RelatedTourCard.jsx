@@ -20,7 +20,7 @@ const RelatedTourCard = ({
       {/* <p className="">{_id}</p> */}
       {/* <p className="">{creatorId}</p> */}
       <Link to={`/tour/${_id}`}>
-        <img src={image} alt={title} className="heroImg" />
+        <img src={image} alt={title} loading="lazy" className="heroImg" />
       </Link>
 
       <Link to={`/user/${creatorId}`}>
@@ -30,7 +30,7 @@ const RelatedTourCard = ({
       <p className="createdAt">{formattedDate(createdAt)}</p>
 
       <div className="likesContainer">
-        {/* <img src={heartIconFilled} className="image__container-likeBtn" alt="" /> */}
+        {/* <img src={heartIconFilled} className="image__container-likeBtn" alt="" loading="lazy"/> */}
         {/* <p className="likeCount">{likeCount}</p> */}
       </div>
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getRelatedToursThunk, getTourThunk } from '../redux/features/tourSlice';
@@ -8,15 +8,19 @@ import cameraIcon from '../assets/svg/camera-icon.svg';
 import { getUserByIdThunk } from '../redux/features/userSlice';
 import RelatedTourCard from '../components/RelatedTourCard';
 import DisqusThread from '../components/DisqusThread';
+import SpinnerLoader from '../components/Spinner';
 
 const TourDetails = () => {
   const dispatch = useDispatch();
   const tourId = useParams().id;
 
-  // tour is populated in the useEffect, and then grabbed in below line from store
   const { tour } = useSelector((state) => state.tour);
+  const { relatedTours, loading } = useSelector((state) => state.tour);
+
   const { currentUser } = useSelector((state) => state.user);
-  const { relatedTours } = useSelector((state) => state.tour);
+
+  const [profilePic, setProfilePic] = useState('');
+  const [loadComments, setLoadComments] = useState(false);
 
   let title,
     description,
@@ -38,24 +42,37 @@ const TourDetails = () => {
     lName = creatorName?.split(' ')[1];
   }
 
+  const handleLoadComments = () => {
+    setLoadComments(!loadComments);
+  };
+
   // Load the creator's profile  - This action is only needed to display creator's profile pic
   useEffect(() => {
+    setTimeout(() => {
+      tags && dispatch(getRelatedToursThunk(tags));
+    }, 2000);
+
     // REMOVING THIS FEATURE - Because it is making the app really hang when TourDetails page (this comp.) is rendered.
     // Also react-persist warning is appearing in the console - [Violation] 'setInterval' handler took 50ms (createPersistoid.js:57)
     // So the slowdown might be caused by that as well.
-    if (tour && currentUser && tour._id === tourId) {
-      if (tour.creatorId !== currentUser._id) {
-        dispatch(getUserByIdThunk(tour?.creatorId));
-      }
-    }
-    // eslint-disable-next-line
-  }, [tour]);
 
-  // Related tours functionality
-  useEffect(() => {
-    tags && dispatch(getRelatedToursThunk(tags));
+    // If the opened tour is the one created by the loggedInUser, then we'll fetch the profile image from localStorage, otherwise,
+    // fetch the userById of creator of post, and set their profile object in currentUser at redux state.
+    // if (tour && currentUser && tour._id === tourId) {
+    dispatch(getUserByIdThunk(tour?.creatorId)); // fetch the creator and set them in currentUser
+    // if (tour.creatorId !== currentUser._id) {
+    // means creator is the loggedin user themself
+    // if (loggedInUser && tour?.creatorId === loggedInUser?._id) {
+    //   setProfilePic(loggedInUser?.profileImage);
+    //   // means creator is a user other than then loggedin user
+    // } else {
+    //   setProfilePic(currentUser?.profileImage);
+    // }
+
+    setProfilePic(currentUser?.profileImage);
+
     // eslint-disable-next-line
-  }, [tags]);
+  }, [tour, profilePic]);
 
   // Load the current Tour
   useEffect(() => {
@@ -93,20 +110,24 @@ const TourDetails = () => {
 
   return (
     <section className="tourDetailsSection">
-      {/* Earlier it was only the "tour &&" check. But we've then also added a "creatorId === currentUser._id" here too, because the profilePic is being loaded from the "currentUser" in state. But that takes too long to update and meanwhile whatever user was store in it previously, thier profilePic appears in place of the actual current user. So we need to make sure that until the id of the tour creator and currentUser's _id match, the component is not loaded. */}
       {tour && (
         <>
           <div className="tourDetails">
             <div className="tourDetails-image__container">
-              <img src={image} alt={title} className="image__container-heroImg" />
+              <img
+                src={image}
+                alt={title}
+                className="image__container-heroImg"
+                loading="lazy"
+              />
 
               <p className="createdAt">
-                <img src={cameraIcon} alt={formattedDate(createdAt)} />
+                <img src={cameraIcon} alt={formattedDate(createdAt)} loading="lazy" />
                 {formattedDate(createdAt)}
               </p>
 
               <Link to={`/user/${creatorId}`} className="tourDetails-creatorName">
-                <img src={currentUser?.profileImageUrl} alt="" />
+                <img src={currentUser?.profileImage} alt="" loading="lazy" />
 
                 <div>
                   <p>{fName}</p>
@@ -118,11 +139,6 @@ const TourDetails = () => {
                 <b> {likes?.length} </b>
                 Likes
               </p>
-
-              {/* <div className="image__container-likesContainer"> */}
-              {/* <img src={heartIconFilled} className="image__container-likeBtn" alt="" /> */}
-              {/* <p className="likeCount">{likeCount}</p> */}
-              {/* </div> */}
             </div>
 
             <div className="tourDetails-textBody">
@@ -147,12 +163,16 @@ const TourDetails = () => {
           <div className="tourDetails__relatedTours">
             <h1 className="relatedTours-heading">Related Tours</h1>
 
-            {relatedToursArr?.length === 0 ? (
+            {loading && <SpinnerLoader />}
+
+            {!loading && relatedToursArr?.length === 0 && (
               <p className="relatedTours-noToursFound">
                 No related tours found! Click <Link to="/addTour">here</Link> to start
                 creating memories!
               </p>
-            ) : (
+            )}
+
+            {!loading && relatedToursArr?.length > 0 && (
               <div className="relatedTours-container-grid">
                 {relatedToursArr &&
                   relatedToursArr.map((tour, index) => (
@@ -165,7 +185,15 @@ const TourDetails = () => {
       )}
 
       {/* Comments - DISQUS */}
-      <DisqusThread id={tourId} title={title} path={`/tour/${tourId}`} />
+      <div className="tourDetails__comments">
+        <button className="load-comments-btn" onClick={handleLoadComments}>
+          {!loadComments ? 'Load Comments' : 'Hide Comments'}
+        </button>
+
+        {loadComments && (
+          <DisqusThread id={tourId} title={title} path={`/tour/${tourId}`} />
+        )}
+      </div>
     </section>
   );
 };

@@ -45,10 +45,6 @@ const App = () => {
         dispatch(logoutThunk());
       }
 
-      // Since persist is giving very slow load times and the images are getting too large to handle for it,
-      // we'll stop redux-persist and just bring the user in from localStorage.
-      // If user is indeed at the localStorage and their session is not expired yet,
-      // then we'll set our loggedIn user in the store, with this user at localstorage
       dispatch(setLoggedInUserValue(isUserAtLocalStorage));
     }
 
@@ -62,12 +58,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/login"
-            // element={user ? <Navigate to="/" /> : <Login />}
-            element={<Login />}
-          />
-          {/* Need this page bcoz of how server's PassportJS redirect is setup */}
+          <Route path="/login" element={<Login />} />
           <Route path="/loginfailed" element={<LoginFailed />} />
 
           {/* =============PROTECTED ROUTES START==================== */}

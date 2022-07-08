@@ -27,8 +27,6 @@ export const getUserFromServerAPI = (userId) => {
 
 // Auth APIs
 export const localLoginAPI = (loginEmail, loginPassword) => {
-  // We need to return the axios call here, to get the response out and into response variable at the authSlice in "const response =".
-  // Keep in mind "response" is automatically returned in the promise, so like if we put "const resp = API.post(...)" below, axios.post's return will be stored in the 'resp'. But since this call is wrapped inside another function to get the return value to that wrapper function, we need to just add a return to the axios call. Which means we don't need to do .then() here. We only need .then((res) => {localStogareSave(res)}) if we actually want to do something with the "response.data", like ex. save "response.data" to local storage.
   return API.post(
     '/auth/loginlocal',
     {
@@ -56,7 +54,7 @@ export const localSignupAPI = (
     password: password,
     cPassword: cPassword,
     fullName: firstName + ' ' + lastName,
-    profileImageUrl: userAvatar,
+    profileImage: userAvatar,
   });
 };
 

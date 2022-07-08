@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import FileBase64 from 'react-file-base64';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+import { motion } from 'framer-motion';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,22 @@ const Signup = () => {
     <section className="signup">
       <div className="signup__forms-container">
         {/* Heading */}
-        <h1 className="">Sign Up</h1>
+        <motion.h1
+          whileInView={{ y: [-50, 0], opacity: [0, 1] }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className=""
+        >
+          Sign Up
+        </motion.h1>
 
         <div className="signup__forms-container-forms ">
           {/* Local Signup Form */}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="signup__forms-local">
+            <motion.div
+              whileInView={{ x: [50, 0], opacity: [0, 1] }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              className="signup__forms-local"
+            >
               {/* First Name Field */}
               <div className="signup__forms-local-input">
                 <label htmlFor="fname" className="">
@@ -184,11 +195,15 @@ const Signup = () => {
               <button type="submit" className="span-2-grid-cols">
                 {loading ? <SpinnerLoader /> : 'Signup'}
               </button>
-            </div>
+            </motion.div>
           </form>
 
           {/* Socials Container */}
-          <div className="signup__forms-social">
+          <motion.div
+            whileInView={{ x: [-50, 0], opacity: [0, 1] }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+            className="signup__forms-social"
+          >
             {/* Social Buttons Div */}
             <div className="signup__forms-social-btn-container">
               <button onClick={() => googleLoginSignup()} className="">
@@ -214,7 +229,7 @@ const Signup = () => {
               <span>Already have an account? </span>
               <Link to="/login">Login</Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
